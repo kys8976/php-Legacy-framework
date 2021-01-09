@@ -1,0 +1,78 @@
+<section class="content-header">
+    <h1>
+    푸시알림 발송내역
+    <small>push list</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>회원 관리</li>
+        <li class="active">푸시알림 발송내역</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <label style="margin-top:5px;">총 <?=$data['total']?> 건</label>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                    <form name="form_search" method="post" action="?tpf=admin/member/push">
+                        <div class="has-feedback">
+                        <span>
+                        <input type="text" name="keyword" id="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" class="form-control input-sm" placeholder="검색"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                        <div class="has-feedback">
+                        <select name="field" class="form-control input-sm">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td>메세지</td>
+                        <td>type</td>
+                        <td>링크 code</td>
+                        <td>발송수</td>
+                        <td>등록일</td>
+                    </tr>
+                    </thead>
+<?php
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        echo '      <tr>
+                        <td>'.nl2br($val['message']).'</td>
+                        <td>'.$category[$val['type']].'</td>
+                        <td>'.$val['link_code'].'</td>
+                        <td>'.$val['send_count'].'</td>
+                        <td>'.$val['reg_date'].'</td>
+                    </tr>';
+    }
+}
+else {
+        echo '      <tr><td colspan="10"><br>등록된 자료가 없습니다.<br><br></td></tr>';
+}
+?>
+                    </table>
+                    <br>
+
+                    <div style="text-align:right;">
+                        <? echo $data['page'];?>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->
+</section>

@@ -1,0 +1,186 @@
+<?=@$board_info['header']?>
+
+<!-- 게시판 목록 Area -->
+<div class="board-list-area">
+
+<?php
+if (!empty($arrCategory)) {
+?>
+    <!-- 게시판 네비 -->
+    <div class="board-naving<?=@$display_navi?>">
+        <ul>
+            <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+    echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+        </ul>
+    </div>
+    <!-- // 게시판 네비 -->
+<?php
+}
+?>
+
+    <!-- 게시판 타이틀 -->
+    <div class="board-title-area">
+        <h2><?=@$board_info['title']?></h2>
+    </div>
+    <!-- //게시판 타이틀 -->
+
+    <!-- 게시판 total -->
+    <div class="board-total-area">
+        <p>Total <strong><?=@$data['total']?></strong>건<span><?=@$data['page_count']?> 페이지</span></p>
+    </div>
+    <!-- //게시판 total -->
+
+    <!-- 게시판 목록 table -->
+    <table class="basic-board-list">
+        <caption class="hidden">게시판 목록</caption>
+        <colgroup>
+            <col width="8%" />
+<?php
+if(@$board_info['category'] != '') {
+    echo '  <col width="12%" />';
+}
+?>
+            <col width="*" />
+            <col width="12%" />
+            <col width="12%" />
+            <col width="10%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+<?php
+if(@$board_info['category'] != '') {
+    echo'       <th scope="col">카테고리</th>';
+}
+?>
+                <th scope="col">제목</th>
+                <th scope="col">글쓴이</th>
+                <th scope="col">날짜</th>
+                <th scope="col">조회</th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+// 공지사항
+if (!empty($notice['list'])) {
+    foreach($notice['list'] as $key => $val) {
+        echo '  <tr class="board-list-notice">
+                    <td>공지</td>';
+        if($board_info['category'] != '') { echo '<td>['.$val['category'].']</td>';}
+        echo '      <td class="board-list-subject"><a href="?tpf=board/view&board_code='.$board_code.'&code='.$val['code'].'">'.$val['title'].'</a>';
+        if ($val['image_url']) {    // 첨부파일 존재할때
+            echo ' <img src="/img/icon_file.gif" title="첨부파일">';
+        }
+        echo'       </td>
+                    <td>'.$val['name'].'</td>
+                    <td>'.$val['reg_date_short'].'</td>
+                    <td>'.$val['hitting'].'</td>
+                </tr>';
+    }
+}
+
+// 리스트
+if (!empty($data['list'])) {
+    $start_number = $data['start_number'];
+    foreach($data['list'] as $key => $val) {
+        echo '  <tr>
+                    <td>'.$start_number.'</td>';
+        if($board_info['category'] != '') { echo '<td>['.$val['category'].']</td>';}
+        if($val['is_secret'] == 'y') {  // 비밀글
+            echo '  <td class="board-list-subject"><a href="#none" onclick="onclickView('.$board_code.','.$val['code'].');return false;"><img src="/img/icon_lock.gif" alt="비밀글" class="board-list-lock-icon">'.$val['title']; if ($val['diff_date'] < 7) { echo ' <img src="img/icon_new.png" alt="새글" />';} echo '</a>';
+        }
+        else {                          // 일반글
+            echo '  <td class="board-list-subject"><a href="?tpf=board/view&board_code='.$board_code.'&code='.$val['code'].'">'.$val['title']; if ($val['diff_date'] < 7) { echo ' <img src="img/icon_new.png" alt="새글" />';} echo '</a>';
+        }
+        if ($val['image_url']) {    // 첨부파일 존재할때
+            echo ' <img src="/img/icon_file.gif" title="첨부파일">';
+        }
+        // 댓글 개수 표출
+        if ($board_info['show_memo'] == 'y') {
+            echo ' ['.$val['memo_count'].']';
+        }
+        echo'       </td>
+                    <td>'.$val['name'].'</td>
+                    <td>'.$val['reg_date_short'].'</td>
+                    <td>'.$val['hitting'].'</td>
+                </tr>';
+        $start_number--;
+    }
+}
+else {
+    echo '  <tr>
+                <td class="empty_list" colspan="5">등록된 게시물이 없습니다.</td>
+            </tr>';
+}
+?>
+        </tbody>
+    </table>
+    <!-- //게시판 목록 table -->
+
+    <!-- 버튼 관리자 로그인시 보이기-->
+    <div class="board-btn-area">
+<?php
+if (@$board_info['auth_write'] != 1) {   // 최고관리자 권한이 아닐때
+    echo '<p class="board-btn-write"><a href="?tpf=board/write&board_code='.@$board_code.'">글쓰기</a></p>';
+}
+?>
+    </div>
+    <!-- //버튼 -->
+
+    <!-- 페이징 -->
+    <? echo @$data['page'];?>
+    <!-- //페이징 -->
+
+    <!-- 검색 -->
+    <div class="board-search-area">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+        <legend class="hidden">게시물 검색</legend>
+<!--
+        <select name="field_cate" id="field_cate">
+            <option value>카테고리</option>
+            <option value="category1">gategory1</option>
+            <option value="category2">category2</option>
+        </select>
+-->
+        <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+echo '          <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+        </select>
+        <input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" />
+        <input type="submit" value="검색" />
+        </form>
+    </div>
+    <!-- //검색 -->
+
+</div>
+<!-- //게시판 목록 Area-->
+
+<div class="layer">
+	<div class="bg"></div>
+	<div class="pop-layer" id="layer">
+		<div class="pop-container">
+			<div class="pop-conts">
+                <form name="form" method="post" action="?tpf=board/process">
+                <input type="hidden" name="mode" value="view">
+                <input type="hidden" name="board_code">
+                <input type="hidden" name="board_data_code">
+                    <p class="board-password-txt">
+                        <strong>먼저 비밀번호를 입력하여 주세요.</strong><br />
+                    </p>
+                    <p class="board-password-input"><label for="board-password">비밀번호</label><input type="password" name="password" /></p>
+                    <p class="board-password-btn" style="text-align:center;">
+                    <a href="#" class="board-password-btn-list">창닫기</a><a href="#none" onclick="register();" class="board-password-btn-ok">확인</a>
+                    </p>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>

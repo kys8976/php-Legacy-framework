@@ -1,0 +1,257 @@
+<link href="http://whoisict.com/html/css/s9soft_juso.css" rel="stylesheet">
+<style>
+.ui-menu {
+    z-index: 9999;
+    width:400px;
+}
+</style>
+
+<section class="content-header">
+    <h1>
+    회원 관리
+    <small>member list</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>회원 관리</li>
+        <li class="active">회원 리스트</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <label style="margin-top:5px;">총 <?=$data['total']?> 건</label>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                    <form name="form_search" method="post" action="?tpf=admin/member/list">
+                        <div class="has-feedback">
+                        <span>
+                        <input type="text" name="keyword" id="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" class="form-control input-sm" placeholder="검색"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                        <div class="has-feedback">
+                        <select name="field" class="form-control input-sm">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td style="width:110px;">아이디</td>
+                        <td style="width:110px;">이름</td>
+                        <td style="width:110px;">휴대폰</td>
+                        <td>주소</td>
+                        <td style="width:120px;">가입일</td>
+                        <td style="width:50px;">상태</td>
+                        <td style="width:60px;">명령</td>
+                    </tr>
+                    </thead>
+<?php
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        if($val['status'] == "y") {
+            $status = '보임';
+            $status_tag = 'success';
+        }
+        else {
+            $status = '숨김';
+            $status_tag = 'default';
+        }
+        echo '      <tr>
+                        <td>'.$val['id'].'</td>
+                        <td>'.$val['name'].'</td>
+                        <td>'.divMobile($val['mobile']).'</td>
+                        <td align="left">'.$val['addr'].' '.$val['addr_etc'].'</td>
+                        <td>'.$val['reg_date'].'</td>
+                        <td style="padding-top:13px;"><span class="label label-'.$status_tag.'" style="font-size:12px;">'.$status.'</span></td>
+                        <td><button type="button" onclick="onclickUpdate('.$val['code'].');" class="btn btn-primary btn-xs">상세보기</button></td>
+                    </tr>';
+    }
+}
+else {
+        echo '      <tr><td colspan="10"><br>등록된 자료가 없습니다.<br><br></td></tr>';
+}
+?>
+                    </table>
+                    <br>
+<!--    // 관리자단에서 회원가입 숨김
+                    <button type="button" onclick="onclickInsert();" class="btn btn-primary">등록</button>
+-->
+                    <button type="button" onclick="onclickSMS();" class="btn btn-danger"><i class="fa fa-bell"></i> SMS발송</button>
+
+                    <div style="text-align:right;">
+                        <? echo $data['page'];?>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->
+</section>
+
+<form name="formID" method="post" onsubmit="return false;" action="?tpf=admin/member/process">
+<input type="hidden" name="mode" value="checkId">
+<input type="hidden" name="id">
+</form>
+
+<!-- // 회원 등록 폼 -->
+<div class="modal fade" id="modalRegister" z-index:10; role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" style="width:620px;">
+        <div class="modal-content">
+            <form name="form" method="post" onsubmit="return false;" action="?tpf=admin/member/process">
+            <input type="hidden" name="mode">
+            <input type="hidden" name="member_code">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">회원 등록</h4>
+            </div>
+            <div class="modal-body">
+
+            <h4><p class="text-light-blue"><i class="fa fa-fw fa-info-circle"></i> 회원정보</p></h4>
+            <table class="table table-bordered">
+            <tr>
+                <td class="menu">아이디</td>
+                <td align="left"><input type="text" name="id" class="form-control input-sm" style="width:30%; float:left;" />&nbsp;<button type="button" id="btn_check_id" class="btn btn-sm btn-default" onclick="onclickCheckId();">아이디 중복확인</button> 4~12자로 입력하세요.</td>
+            </tr>
+            <tr>
+                <td class="menu">비밀번호</td>
+                <td align="left"><input type="password" name="password" placeholder="" class="form-control input-sm" style="width:30%; float:left;" /> 대소문자와 숫자 포함 8~15자로 입력하세요</td>
+            </tr>
+            <tr>
+                <td class="menu">비밀번호 확인</td>
+                <td align="left"><input type="password" name="password_confirm" placeholder="" class="form-control input-sm" style="width:30%;" /></td>
+            </tr>
+            <tr>
+                <td class="menu">이름</td>
+                <td align="left"><input type="text" name="name" class="form-control input-sm" style="width:30%;" /></td>
+            </tr>
+            <tr>
+                <td class="menu">휴대폰</td>
+                <td align="left">
+                <select name="mobile1" class="form-control input-sm" style="width:15%; float:left;">
+<?php
+foreach($arrMobileType as $key => $val) {
+    echo '      <option value="'.$val.'">'.$val.'</option>';
+}
+?>
+                </select> <span style="float:left;">-</span>
+                <input type="text" name="mobile2" onkeyup="this.value=checkNum(this.value)" class="form-control input-sm" style="width:15%; float:left;" maxlength="4" /> <span style="float:left;">-</span>
+                <input type="text" name="mobile3" onkeyup="this.value=checkNum(this.value)" class="form-control input-sm" style="width:15%; float:left;" maxlength="4" />
+                </td>
+            </tr>
+            <tr>
+                <td class="menu">이메일</td>
+                <td align="left"><input type="text" name="email" class="form-control input-sm" style="width:60%;" /></td>
+            </tr>
+            <tr>
+                <td class="menu">주소</td>
+                <td align="left">
+                <input type="text" name="zipcode" id="zipcode" readonly class="form-control input-sm" style="width:15%; background-color:#dddddd; float:left;" />&nbsp;<button type="button" onclick="callAddress();" class="btn btn-sm btn-default">주소입력</button><br>
+                <input type="text" class="input-addr" id="address" placeholder="주소입력 예) 느티마을4단, ㄱㄴㅍㅇㄴㅅ, 여의 메리츠, 행자부, 목동아파트, 테헤란로 152" style="display:none; margin:5px 0; width:100%;">
+                <input type="text" name="addr" id="addr" readonly class="form-control input-sm" style="margin:5px 0; width:100%;  background-color:#dddddd;" />
+                <input type="text" name="addr_etc" id="addr_etc" placeholder="상세주소" class="form-control input-sm" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td class="menu">메모</td>
+                <td align="left"><textarea name="memo" id="memo" rows="4" class="form-control input-sm" style="width:100%;"></textarea></td>
+            </tr>
+            <tr id="display_level">
+                <td class="menu">등급 <span class="text-light-blue"><i class="fa fa-check"></i></span></td>
+                <td>
+                <select name="level" id="level" class="form-control input-sm" style="width:120px;">
+<?php
+foreach($arrLevel as $key => $val) {
+    echo '      <option value="'.$val['level'].'">'.$val['title'].'</option>';
+}
+?>
+                </select>
+                </td>
+            </tr>
+            <tr id="display_status">
+                <td class="menu">상태 <span class="text-light-blue"><i class="fa fa-check"></i></span></td>
+                <td>
+                <select name="status" id="status" class="form-control input-sm" style="width:120px;">
+<?php
+foreach($arrMemberStatus as $key => $val) {
+    echo '      <option value="'.$key.'">'.$val.'</option>';
+}
+?>
+                </select>
+                </td>
+            </tr>
+            <tr id="display_last_login_date">
+                <td class="menu">최근 접속일</td>
+                <td align="left"><span id="last_login_date"></span></td>
+            </tr>
+            <tr id="display_update_date">
+                <td class="menu">수정일자</td>
+                <td align="left"><span id="update_date"></span></td>
+            </tr>
+            <tr id="display_reg_date">
+                <td class="menu">등록일자</td>
+                <td align="left"><span id="reg_date"></span></td>
+            </tr>
+            </table>
+            </form>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" onclick="register();" class="btn btn-primary">저장</button>
+            <!--<button type="button" onclick="deleteMember();" class="btn btn-danger">삭제</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- // SMS 발송 폼 -->
+<div class="modal fade" id="modalSMS" tabindex="-2" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" style="width:500px;">
+        <div class="modal-content">
+            <form name="formSMS" method="post" onsubmit="return false;" action="?tpf=admin/member/process">
+            <input type="hidden" name="mode" value="sms">
+            <input type="hidden" name="field" value="<?=!empty($field) ? $field : ""?>">
+            <input type="hidden" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPortfolio">SMS 발송</h4>
+            </div>
+            <div class="modal-body">
+
+            <table class="table table-bordered">
+            <tr>
+                <td class="menu">수신자</td>
+                <td align="left"><?=$data['total']?> 명</td>
+            </tr>
+
+            <tr>
+                <td class="menu">
+                메세지<br>
+                (<span id="msg_count">0</span> / 90 byte)
+                </td>
+                <td align="left"><textarea name="msg" id="msg" rows="4" style="width:100%;"></textarea></td>
+            </tr>
+            </table>
+            </form>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" onclick="registerSMS();" class="btn btn-primary">보내기</button>
+            </div>
+        </div>
+    </div>
+</div>

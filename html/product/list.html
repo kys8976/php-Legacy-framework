@@ -1,0 +1,21 @@
+<p class="path">home &lt; 제품소개 &lt; <span class="path_point">일반조명</span></p>
+<h3 class="ctn_tle"><?=$category_name?></h3>
+<div class="ctn">
+
+	<ul class="product_list">
+<?php
+if (!empty($arrProduct['list'])) {
+    foreach($arrProduct['list'] as $key => $val) {
+        echo '<li><a href="?tpf=product/view&category_code='.$category_code.'&code='.$val['code'].'"><img class="list" src="'._USER_URL.'/product/'.$val['code'].'_1" alt="" /><p>'.$val['title'].'</p></a></li>';
+    }
+}
+else {
+    echo '<div style="text-align:center;">등록된 자료가 없습니다.</div>';
+}
+?>
+	</ul>
+
+	<!--페이지넘버-->
+    <?=$arrProduct['page']?>
+
+</div>

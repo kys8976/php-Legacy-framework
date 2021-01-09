@@ -1,0 +1,267 @@
+<section class="content-header">
+    <h1>
+    <?=$info['title']?> 관리
+    <small><?=$info['title']?> list</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><?=$info['title']?> 관리</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <label style="margin-top:5px;">총 <?=$data['total']?> 건</label>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                    <form name="form_search" method="post" action="?tpf=admin/board/list">
+                    <input type="hidden" name="board_code" value="<?=$board_code?>">
+                        <div class="has-feedback">
+                        <span>
+                        <input type="text" name="keyword" id="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" class="form-control input-sm" placeholder="검색"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </span>
+                        </div>
+                    </div>
+
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                        <div class="has-feedback">
+<?php
+if ($info['type'] == 'event') { // 이벤트형 일때
+?>
+                        <select name="status" OnChange="location.href='index.php?tpf=admin/board/list&status='+this.value+'&board_code=<?=$board_code?>'" class="form-control input-sm" style="float:left; width:100px; margin-right:5px;">
+                        <option value="">전체</option>
+                        <option value="ing"<?if(@$status == 'ing') { echo' selected';}?>>진행중</option>
+                        <option value="done"<?if(@$status == 'done') { echo' selected';}?>>완료</option>
+                        </select>
+<?php
+}
+?>
+                        <select name="field" class="form-control input-sm" style="float:left; width:130px;">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                    <form name="form_list" method="post" action="?tpf=admin/board/process">
+		            <input type="hidden" name="mode" id="mode">
+		            <input type="hidden" name="board_code" value="<?=$board_code?>">
+                    <thead>
+                    <tr>
+                        <td style="width:30px;"><input type="checkbox" name="select_all" onclick=selectAllCheckBox('form_list'); /></td>
+                        <td style="width:60px;">NO</td>
+<?php
+if (!empty($info['arrCategory'])) {
+    echo '              <td style="width:100px;">분류</td>';
+}
+?>
+                        <td>제목</td>
+<?php
+if ($info['type'] == 'event') { // 이벤트형 일때
+    echo '              <td style="width:160px;">기간</td>
+                        <td style="width:80px;">상태</td>';
+}
+?>
+                        <td style="width:100px;">작성자</td>
+                        <td style="width:140px;">등록일</td>
+                        <td style="width:80px;">조회수</td>
+                        <td style="width:80px;">명령</td>
+                    </tr>
+                    </thead>
+<?php
+// 공지사항
+if (!empty($notice['list'])) {
+    foreach($notice['list'] as $key => $val) {
+        echo '      <tr>
+                        <td></td>
+                        <td>공지</td>';
+    if (!empty($info['arrCategory'])) {
+        echo '          <td></td>';
+    }
+        echo '          <td align="left">'.$val['title'];
+        if (file_exists(_USER_DIR."/board/".$val['code'])) {    // 첨부파일
+            echo ' <img alt="첨부파일" src="/img/sub/icon_file.gif">';
+        }
+        echo '          </td>';
+        if ($info['type'] == 'event') { // 이벤트형 일때
+            echo '      <td>'.@$val['start_date'].'~'.@$val['end_date'].'</td>
+                        <td style="padding-top:13px;">'; if(@$val['diff_event_date'] >= 0) { echo '<span class="label label-success" style="font-size:12px;">진행중</span>';} else { echo '<span class="label label-default" style="font-size:12px;">완료</span>';} echo '</td>';
+        }
+        echo '          <td>'.$val['name'].'</td>
+                        <td>'.$val['reg_date'].'</td>
+                        <td>'.$val['hitting'].'</td>
+                        <td><button type="button" onclick="onclick_update('.$val['code'].');" class="btn btn-primary btn-xs">상세보기</button></td>
+                    </tr>';
+    }
+}
+
+// 리스트
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        echo '      <tr>
+                        <td><input type="checkbox" name="list[]" value="'.$val['code'].'" /></td>
+                        <td>'.$data['start_number'].'</td>';
+        if (!empty($info['arrCategory'])) {
+            echo '      <td>'.$val['category'].'</td>';
+        }
+        echo '          <td align="left">'; if($val['is_secret'] == 'y') { echo '<img src="/img/icon_lock.gif" alt="비밀글" class="board-list-lock-icon"> ';} echo $val['title'];
+        if (file_exists(_USER_DIR."/board/".$val['code'])) {    // 첨부파일
+            echo ' <img alt="첨부파일" src="/img/icon_file.gif">';
+        }
+        echo '          </td>';
+        if ($info['type'] == 'event') { // 이벤트형 일때
+            echo '      <td>'.$val['start_date'].'~'.$val['end_date'].'</td>
+                        <td style="padding-top:13px;">'; if($val['diff_event_date'] >= 0) { echo '<span class="label label-success" style="font-size:12px;">진행중</span>';} else { echo '<span class="label label-default" style="font-size:12px;">완료</span>';} echo '</td>';
+        }
+        echo '          <td>'.$val['name'].'</td>
+                        <td>'.$val['reg_date'].'</td>
+                        <td>'.$val['hitting'].'</td>
+                        <td><button type="button" onclick="onclick_update('.$val['code'].');" class="btn btn-primary btn-xs">상세보기</button></td>
+                    </tr>';
+                    $data['start_number']--;
+    }
+}
+else {
+        echo '      <tr><td colspan="10"><br>등록된 자료가 없습니다.<br><br></td></tr>';
+}
+?>
+                    </form>
+                    </table>
+                    <br>
+
+                    <button type="button" onclick="selectDelete();" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i> 선택삭제</button>
+                    <button type="button" onclick="onclickInsert()"  class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i> 글 등록</button>
+
+                    <div style="text-align:right;">
+                        <? echo $data['page'];?>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->
+</section>
+
+<div class="modal fade" id="modalContent" tabindex="-2" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="form_register" method="post" action="?tpf=admin/board/process" enctype="multipart/form-data">
+            <input type="hidden" name="mode" id="mode" value="insert">
+            <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <input type="hidden" name="board_data_code" id="board_data_code">
+            <input type="hidden" name="delete_file" id="delete_file">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPortfolio">게시물 관리</h4>
+            </div>
+            <div class="modal-body">
+
+            <h4><p class="text-light-blue"><i class="fa fa-fw fa-info-circle"></i> 글 <span id="board_sub_title">등록</span></p></h4>
+            <table class="table table-bordered">
+<?php
+if (!empty($info['arrCategory'])) {
+?>
+            <tr>
+                <td class="menu">카테고리</td>
+                <td align="left">
+                <select name="category" id="category" class="form-control input-sm" style="width:120px;">
+<?php
+foreach($info['arrCategory'] as $key => $val) {
+    echo '      <option value="'.$val.'">'.$val.'</option>';
+}
+?>
+                </select>
+                </td>
+            </tr>
+<?
+}
+?>
+            <tr>
+                <td class="menu">작성자</td>
+                <td align="left"><input type="text" name="name" id="name" value="<?=$name?>" class="form-control input-sm" style="width:50%;"></td>
+            </tr>
+<?php
+if ($info['type'] == 'qna') {   // Q&A type 일때
+?>
+            <tr>
+                <td class="menu">휴대전화</td>
+                <td align="left"><input type="text" name="tel" id="tel" class="form-control input-sm" style="width:50%;"></td>
+            </tr>
+            <tr>
+                <td class="menu">이메일</td>
+                <td align="left"><input type="text" name="email" id="email" class="form-control input-sm" style="width:50%;"></td>
+            </tr>
+<?php
+}
+if ($info['type'] == 'movie') { // 동영상 type 일때
+?>
+            <tr>
+                <td class="menu">링크</td>
+                <td align="left"><input type="text" name="link" id="link" class="form-control input-sm" placeholder="http://youtube.com" style="width:50%;"></td>
+            </tr>
+<?php
+}
+?>
+            <tr>
+                <td class="menu">제목</td>
+                <td align="left">
+                <span style="float:left;width:80%;"><input type="text" name="title" id="title" class="form-control input-sm"></span>
+                <span>&nbsp;&nbsp;<input type="checkbox" name="is_notice" value="y">공지사항</span>
+                </td>
+            </tr>
+<?php
+if ($info['type'] == 'event') {
+?>
+            <tr >
+                <td class="menu">기간</td>
+                <td align="left">
+                <input type="text" name="start_date" id="datepicker1" readonly class="form-control input-sm" style="width:80px; float:left" placeholder="시작일">
+                <span style="padding-top:5px; float:left"> ~ </span>
+                <input type="text" name="end_date" id="datepicker2" readonly class="form-control input-sm" style="width:80px; float:left" placeholder="종료일">
+                </td>
+            </tr>
+<?
+}
+?>
+            <tr>
+                <td class="menu">내용</td>
+                <td align="left"><textarea name="content" id="content" rows="10" cols="80"></textarea></td>
+            </tr>
+            <tr>
+                <td class="menu">파일</td>
+                <td align="left">
+                <p>
+                    <span id="file_list"></span>
+                </p>
+
+                <p style="padding-top:10px; float:left; width:100%;">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="addFile();"><span class="glyphicon glyphicon-plus"></span> 파일추가</button><br>
+                </p>
+                <div id="list_file"><input type="file" name="file[]" class="form-control input-sm" style="width:100%; display:inline; margin-bottom:10px;"></div>
+                </td>
+            </tr>
+            </table>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" onclick="register()" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;
+<!--            <button type="button" onclick="reply()" id="display_reply" style="display:none;" class="btn btn-danger">답변 페이지로 전환</button>-->
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="list_file_tag" class="sr-only">
+    <input type="file" name="file[]" class="form-control input-sm" style="width:100%; display:inline; margin-bottom:10px;">
+</div>
+
+<script src="/common/ckeditor/ckeditor.js"></script>

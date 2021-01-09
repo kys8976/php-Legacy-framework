@@ -1,0 +1,19 @@
+<?php include('html/layout/inc_head.html');?>
+
+<body>
+<iframe name="iframe_process" width="0" height="0" frameborder="0" style="display:none;"></iframe>
+<div id="container">
+    <?php include('html/layout/inc_top_menu.php');?>
+
+    <?php include('html/layout/inc_left_menu.php');?>
+
+    <div id="sub-content">
+    <?php echo $content_for_layout; ?>
+    </div>
+
+    <?php include('html/layout/inc_bottom.html');?>
+</div>
+<?php echo $javascript_for_layout; ?>
+
+</body>
+</html>

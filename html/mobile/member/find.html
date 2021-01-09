@@ -1,0 +1,73 @@
+<!-- member-wrap -->
+<section class="member-wrap">
+
+    <!-- member-title -->
+    <h2 class="member-title">아이디/비밀번호 찾기</h2>
+    <!-- //member-title -->
+
+    <!-- join-form-wrap -->
+    <section class="join-form-wrap">
+        <form name="form1" action="?tpf=member/process" method="post">
+        <input type="hidden" name="mode" value="find_id">
+            <fieldset>
+                <legend>아이디찾기<span>회원정보에 입력하신 성함과 이메일 주소를 입력해 주세요.</span></legend>
+                <table class="form-table">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr class="join-form-name">
+                            <th scope="row"><label for="">이름</label></th>
+                            <td><input type="text" name="name" /></td>
+                        </tr>
+                        <tr class="join-form-name">
+                            <th scope="row">이메일 주소</th>
+                            <td><input type="text" name="email" placeholder="id@whois.co.kr" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+
+        <p class="join-btn-wrap">
+            <a href="/" class="btn-cancel">취소</a>
+            <a href="#none" onclick="findId()" class="btn-confirm">아이디 찾기</a>
+        </p>
+        <form name="form2" action="?tpf=member/process" method="post">
+        <input type="hidden" name="mode" value="find_password">
+            <fieldset>
+                <legend>비밀번호 찾기<span>회원정보에 입력하신 이메일 주소로 새롭게 변경된 비밀번호를 보내드립니다.</span></legend>
+                <table class="form-table">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr class="join-form-name">
+                            <th scope="row">아이디</th>
+                            <td><input type="text" name="id" /></td>
+                        </tr>
+                        <tr class="join-form-name">
+                            <th scope="row">이름</th>
+                            <td><input type="text" name="name" /></td>
+                        </tr>
+                        <tr class="join-form-name">
+                            <th scope="row">이메일</th>
+                            <td><input type="text" name="email" placeholder="id@whois.co.kr" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+
+        <p class="join-btn-wrap">
+            <a href="/" class="btn-cancel">취소</a>
+            <a href="#noe" onclick="findPassword();" class="btn-confirm">비밀번호 찾기</a>
+        </p>
+
+    </section>
+    <!-- //join-form-wrap -->
+
+</section>
+<!-- //member-wrap -->

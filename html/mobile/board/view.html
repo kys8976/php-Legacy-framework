@@ -1,0 +1,146 @@
+<!-- board-wrap -->
+<section class="board-wrap">
+
+    <!-- board-title -->
+    <h2 class="board-title"><?=$board_info['title']?></h2>
+    <!-- //board-title -->
+
+    <!-- board-view -->
+    <article class="board-view">
+        <header>
+            <h1><?=$data['title']?></h1>
+            <address>
+                <p><?=$data['name']?></p>
+                <p><time datetime="2017.06.15"><?=$data['reg_date']?></time></p>
+                <p>view : <?=$data['hitting']?></p>
+            </address>
+        </header>
+        <section class="board-conts">
+            <figure>
+<?php
+if (!empty($data['files'])) {
+    foreach($data['files'] as $key => $val) {
+        if (checkImage($val['file_ext'])) echo '<p style="text-align:center;"><img src="'.$val['url'].'" alt="'.$val['orig_name'].'" style="max-width:100%;"></p>';
+    }
+}
+?>
+            </figure>
+            <p><?=$data['content']?></p>
+        </section>
+
+        <ul class="board-view-file">
+<?php
+if (!empty($data['files'])) {
+    foreach($data['files'] as $key => $val) {
+        echo '  <li><a href="#none" onclick="location.replace(\'?tpf=common/save_as&file_path='.$val['file_path'].'&file_name='.$val['file_name'].'&orig_name='.urlencode($val['orig_name']).'\');" style="cursor:pointer;"><strong>'.$val['orig_name'].'</strong> ('.$val['file_size'].'K)</a></li>';
+    }
+}
+?>
+        </ul>
+
+        <section class="comment-wrap">
+            <ul>
+<?php
+if ($board_info['show_memo'] == 'y') {  // 댓글 표출
+    if (!empty($memo['list'])) {
+        foreach($memo['list'] as $key => $val) {
+        echo '  <li class="comment-list">
+                    <span>'.$val['name'].'</span>
+                    <span>'.nl2br($val['content']).'</span>
+                    <span>'.$val['reg_date'].'</span>
+                    <a href="#none" onclick="deleteMemo('.$val['code'].')"><img src="/img/common/btn_comment_del.gif" alt="댓글삭제" /></a>
+                </li>';
+        }
+    }
+    else {
+        echo '  <li class="no-comment">등록된 댓글이 없습니다.</li>';
+    }
+}
+?>
+
+            </ul>
+            <form name="form_memo" method="post" action="?tpf=board/process">
+            <input type="hidden" name="mode" value="insertMemo">
+            <input type="hidden" name="delete_password">
+            <input type="hidden" name="code">
+            <input type="hidden" name="board_code" value="<?=$data['board_code']?>">
+            <input type="hidden" name="board_data_code" value="<?=$data['code']?>">
+            <div class="comment-write">
+                <p><label for="name">글쓴이</label><input type="text" id="name" name="name" onclick="checkMemoAuth()" /><label for="password">비밀번호</label><input type="password" id="password" name="password" /></p>
+
+                <div>
+                    <p><textarea name="content" cols="30" rows="10"></textarea></p>
+                    <p><a href="#none" onclick="registerMemo()">댓글등록</a></p>
+                </div>
+				<?php
+if ($board_info['is_captcha'] == 'y') {
+        echo '  <p class="board-view-captcha">
+						<label for="auth_key">보안코드</label>
+							<i onclick="reloadCaptcha()" class="btn-reload"></i><img id="displayCaptcha" src="?tpf=common/captcha" alt="자동입력방지" />
+						<input type="text" id="auth_key" name="auth_key" title="스팸방지" maxlength="4" />
+						<span>스팸방지를 위해 위쪽에 보이는 코드를 입력해주세요.</span>
+                </p>';
+}
+?>
+            </div>
+            </form>
+        </section>
+
+        <!-- btn -->
+        <div class="btn-view-wrap">
+			 <p>
+<?php
+if ($board_info['auth_reply'] != 1) {   // 최고관리자 권한이 아닐때
+    echo'  <a href="?tpf=board/write&action=reply&board_code='.$data['board_code'].'&code='.$data['code'].'" class="btn-reply">답글</a>';
+}
+if ($board_info['auth_update'] != 1) {  // 최고관리자 권한이 아닐때
+    echo'   <a href="?tpf=board/write&action=update&board_code='.$data['board_code'].'&code='.$data['code'].'" class="btn-modify">수정</a>';
+}
+if ($board_info['auth_delete'] != 1) {  // 최고관리자 권한이 아닐때
+    echo'   <a href="#none" onclick="onclickDelete();" class="btn-del">삭제</a>';
+}
+?></p>
+        <a href="?tpf=board/list&board_code=<?=$data['board_code']?>" class="btn-list">목록</a>
+        </div>
+        <!-- //btn -->
+
+        <ul class="post-navi">
+<?php
+if (!empty($extend['prev']['title'])) {
+    echo '  <li class="prev-post"><strong>이전글</strong><a href="?tpf=board/view&board_code='.$data['board_code'].'&code='.$extend['prev']['code'].'">'.$extend['prev']['title'].'</a><span>'.$extend['prev']['reg_date'].'</span></li>';
+}
+?>
+<?php
+if (!empty($extend['next']['title'])) {
+    echo '  <li class="next-post"><strong>다음글</strong><a href="?tpf=board/view&board_code='.$data['board_code'].'&code='.$extend['next']['code'].'">'.$extend['next']['title'].'</a><span>'.$extend['next']['reg_date'].'</span></li>';
+}
+?>
+        </ul>
+    </article>
+    <!-- //board-view -->
+
+</section>
+<!-- //board-wrap -->
+
+<div class="layer">
+	<div class="bg"></div>
+	<div class="pop-layer" id="layer">
+		<div class="pop-container">
+			<div class="pop-conts">
+                <form name="form" method="post" action="?tpf=board/process">
+                <input type="hidden" name="mode" value="delete">
+                <input type="hidden" name="board_code" value="<?=$data['board_code']?>">
+                <input type="hidden" name="board_data_code" value="<?=$data['code']?>">
+                    <p class="board-password-txt">
+						이글은 비밀글입니다.<br /><strong>비밀번호를 입력하여 주세요.</strong>
+                    </p>
+					<p class="board-password-input"><label for="password">비밀번호</label><input type="password" id="password" name="password"></p>
+                    <p class="board-password-btn">
+						<a href="#" class="board-password-btn-list">목록</a>
+						<a href="#none" onclick="register();" class="board-password-btn-ok">확인</a>
+                    </p>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,89 @@
+<table border="0" cellspacing="0" cellpadding="5" width="100%">
+<tr>
+    <td colspan="2">
+    <h1><?=$title?></h1>
+    </td>
+    <td align="right">
+    <h1><a href="index.php?tpf=board/list&board_code=1">more</a></h1>
+    </td>
+</tr>
+<?php
+if (!empty($list)) {
+    foreach($list as $key => $val) {
+        echo '  <tr>
+                    <td>'.$val['code'].'</td>
+                    <td>'.$val['name'].'</td>
+                    <td><a href="?tpf=board/view&board_code=1&code='.$val['code'].'">'.$val['title'].'</a></td>
+                </tr>';
+    }
+}
+?>
+</table>
+
+<br>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+<form name="form_register" method="post" action="./">
+<tr>
+    <td>폼 등록!</td>
+</tr>
+<tr>
+    <td>
+    <input type="text" name="title" size="50">
+    </td>
+</tr>
+<tr>
+    <td>
+    <input type="button" value="등록" onclick="register();">
+    </td>
+</tr>
+</form>
+</table>
+
+<?php
+if(!empty($popup['list'])){
+	foreach($popup['list'] as $key => $val) {
+	    echo '
+        <div style="width:'.$val['width'].'px; height:'.$val['height'].'px; position:absolute; top:'.$val['top_position'].'px; left:'.$val['left_position'].'px; z-index:9999; solid #c0c0c0; display:none; background-color:#FFFFFF;line-height:20px;" id="popuplayer'.$val['code'].'">'.$val['content'];
+?>
+        <script type='text/javascript'>
+        //<![CDATA[
+        $(function() {
+            if ( getCookie("popuplayer<?=$val['code']?>" ) != "done" ) {
+                $("#popuplayer<?=$val['code']?>").fadeIn();
+            }
+        });
+        //]]>
+        </script>
+
+			<div style="height:25px; margin-top:<?=$val['height']-110?>px; padding-top:5px; text-align:right; background-color:#000000; color:#FFFFFF; font-weight:bold; border:1px solid black;">
+            <form name="popuplayer<?=$val['code']?>">
+				<span style="color:grey">
+				<?php if($val['popup_cookie'] == "y"){?>
+					<label>
+						<input type="checkbox" name="popupcheck" value="Y" style="border:none;color:#FFFFFF;">
+						<span style="color:#FFF">오늘하루열지않음</span>
+					</label>
+				<?php }else{?>
+						<input type="hidden" name="popupcheck" value="Y" style="border:none;color:#FFFFFF;">
+				<?php }?>
+					<span style="display:inline-block:width:300px">&nbsp;</span>
+				</span>
+				<a href="javascript:popupClose('popuplayer<?=$val['code']?>');"><span style="color:grey">Close</span></a>&nbsp;&nbsp;
+            </form>
+			</div>
+	    </div>
+<?php
+	}
+}
+?>
+
+<!-- 배너영역 -->
+<div class="patner">
+<?php
+if(!empty($banner['list'])) {
+    foreach($banner['list'] as $key => $val) {
+        echo'<li><a href="'.$val['url'].'" target="_blank">'; if (file_exists(_USER_DIR."/banner/".$val['code'])) { echo '<img src="'._USER_URL.'/banner/'.$val['code'].'" alt="Main Visual">';} echo '</a></li>';
+    }
+}
+?>
+</div>

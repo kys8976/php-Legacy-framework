@@ -1,0 +1,39 @@
+<!-- member-wrap -->
+<section class="member-wrap">
+
+    <!-- member-title -->
+    <h2 class="member-title">회원가입</h2>
+    <!-- //member-title -->
+
+    <!-- join-form-wrap -->
+    <section class="join-result-wrap">
+        <form action="">
+            <fieldset>
+                <p class="result-title">CONGRATULATION<br />회원가입이 성공적으로 되었습니다!</p>
+                <p class="result-text">지금부터 <span>[<?=$site_name?>]</span> 에서 제공하는 서비스를 이용하실 수 있습니다.</p>
+                <p class="warning-message">보안을 위해 비밀번호는 정기적으로 변경해 주시기 바랍니다.</p>
+                <table class="form-table">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row">고객명</th>
+                            <td><?=$name?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+
+        <p class="join-btn-wrap">
+            <a href="?tpf=member/login" class="btn-cancel">로그인</a>
+            <a href="/" class="btn-confirm">메인으로</a>
+        </p>
+
+    </section>
+    <!-- //join-form-wrap -->
+
+</section>
+<!-- //member-wrap -->

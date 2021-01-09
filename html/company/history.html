@@ -1,0 +1,14 @@
+<div class="subcontents">
+    <span class="year">연혁</span>
+    <br>
+    <br>
+    <ol class="yearOl">
+<?php
+    foreach($data['list'] as $key => $val) {
+        echo '
+        <li><span class="liYear" style="font-weight:bold;">'.$val['year']."년 ".$val['month'].'월</span> <span class="liTitle">'.nl2br($val['title']).'</span></li>';
+    }
+?>
+    </ol>
+</div>
+<!--E:subcontents-->

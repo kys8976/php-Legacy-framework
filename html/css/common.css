@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* common */
+html,body,div,span,applet,object,iframe,h1,h2,h3, h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,dialog,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
+ margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; font: inherit; vertical-align: baseline;}
+article,aside,details,dialog,figcaption,figure,footer,header,hgroup,menu,nav,section {display: block;}
+ol,ul,li {list-style: none}
+blockquote,q {quotes: none}
+blockquote:before,blockquote:after,q:before,q:after  {content: ''; content: none;}
+ins {background-color: #ff9; color: #000; text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse; border-spacing: 0;}
+abbr[title], dfn[title] {border-bottom:1px dotted #000; cursor: help}
+hr {display: block; height: 1px; border: 0; border-top: 1px solid #c7c7c7; margin: 1em 0; padding: 0;}
+*{margin:0; padding:0; }
+li{list-style:none;}
+img {border:0 none;}
+.hidden {position:absolute; left:-9999px; top:-9999px; width:0; height:0; font-size:0; line-height:0;}
+form {min-width: auto;}
+input[type="image"] {border:0 none;}
+button, input[type="submit"] {cursor: pointer; border:0 none;}
+button::-moz-focus-inner {border: 0 none; padding: 0;}
+body {background-color:#ffffff; word-wrap:break-word; word-break:break-all;  zoom:1; -webkit-text-size-adjust: 100%;}
+body,html {position:relative; height:100%;}
+
+body,th,td,input,select,textarea,button {font-size:13px; line-height:1.5; font-family:'Malgun Gothic', '맑은 고딕', sans-serif; color:#666;} /* color값은 디자인가이드에 맞게사용 */
+a{text-decoration:none; color:#666;} /* color값은 디자인가이드에 맞게사용 */
+
+/* layer */
+.layer {display:none; position:fixed; _position:absolute; top:0; left:0; width:100%; height:100%; z-index:100;}
+.layer .bg {position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:.5; filter:alpha(opacity=50);}
+.layer .pop-layer {display:block;}
+.pop-layer {display:none; position: absolute; top: 50%; left: 50%; width: 350px; height:auto;  background-color:#fff; border: 3px solid #555; z-index: 10;}
+.pop-layer .pop-container {padding: 20px 25px;}
+input[type="text"],input[type="password"],textarea,input[type="submit"] {-webkit-appearance: none; -webkit-border-radius: 0;}
+.pop-layer .board-password-txt {font-size:13px; line-height:18px; text-align:center;}
+.pop-layer .board-password-input {margin:40px; text-align:center;}
+.pop-layer .board-password-input label{display:inline-block; margin:0 10px 0 0;	font-size:12px; color:#333; vertical-align:middle;}
+.pop-layer .board-password-input input{display:inline-block; padding:0 0 0 8px; width:150px; height:26px; border:1px solid #d8d8d8; color:#555; vertical-align:middle;}
+	/* btn */
+.pop-layer .board-password-btn {text-align:center;}
+.pop-layer .board-password-btn a{display:inline-block; margin:0 5px; padding:10px 30px; box-sizing:border-box; text-decoration:none; font-size:13px;}
+.pop-layer .board-password-btn .board-password-btn-list {background:#d3d3d3; color:#464646;}
+.pop-layer .board-password-btn .board-password-btn-ok {background:#111; color:#fff;}

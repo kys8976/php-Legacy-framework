@@ -1,0 +1,158 @@
+<section class="content-header">
+    <h1>
+    <?=$info['title']?> 관리
+    <small><?=$info['title']?> list</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><?=$info['title']?> 관리</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <label style="margin-top:5px;">총 <?=$data['total']?> 건</label>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                    <form name="form_search" method="post" action="?tpf=admin/board/list">
+                    <input type="hidden" name="board_code" value="<?=$board_code?>">
+                        <div class="has-feedback">
+                        <span>
+                        <input type="text" name="keyword" id="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" class="form-control input-sm" placeholder="검색"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+                        <div class="has-feedback">
+                        <select name="field" class="form-control input-sm">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                    <form name="form_list" method="post" action="?tpf=admin/board/process">
+		            <input type="hidden" name="mode" id="mode">
+		            <input type="hidden" name="board_code" value="<?=$board_code?>">
+                    <thead>
+                    <tr>
+                        <td style="width:30px;"><input type="checkbox" name="select_all" onclick=selectAllCheckBox('form_list'); /></td>
+                        <td style="width:60px;">NO</td>
+                        <td>제목</td>
+                        <td style="width:100px;">작성자</td>
+                        <td style="width:140px;">등록일</td>
+                        <td style="width:80px;">조회수</td>
+                        <td style="width:60px;">
+                        <i onclick="<?=$onclick_change_down?>" class="fa fa-fw fa-arrow-circle-down cp" style="cursor:pointer;"></i>
+                        <i onclick="<?=$onclick_change_up?>" class="fa fa-fw fa-arrow-circle-up cp" style="cursor:pointer;"></i>
+                        </td>
+                        <td style="width:80px;">명령</td>
+                    </tr>
+                    </thead>
+<?php
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        echo '      <tr>
+                        <td><input type="checkbox" name="list[]" value="'.$val['code'].'" /></td>
+                        <td>'.$data['start_number'].'</td>
+                        <td align="left">'.$val['title'];
+        if (file_exists(_USER_DIR."/board/".$val['code'])) {    // 첨부파일
+            echo ' <img alt="첨부파일" src="/img/sub/icon_file.gif">';
+        }
+        echo '          </td>
+                        <td>'.$val['name'].'</td>
+                        <td>'.$val['reg_date'].'</td>
+                        <td>'.$val['hitting'].'</td>
+                        <td><input type="radio" name="order_code" value="'.$val['num'].'"'; if($val['num'] == $order_code) { echo ' checked';} echo' /></td>
+                        <td><button type="button" onclick="onclick_update('.$val['code'].');" class="btn btn-primary btn-xs">상세보기</button></td>
+                    </tr>';
+                    $data['start_number']--;
+    }
+}
+else {
+        echo '      <tr><td colspan="10"><br>등록된 자료가 없습니다.<br><br></td></tr>';
+}
+?>
+                    </form>
+                    </table>
+                    <br>
+
+                    <button type="button" onclick="selectDelete();" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i> 선택삭제</button>
+                    <button type="button" onclick="onclickInsert()"  class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i> 글 등록</button>
+
+                    <div style="text-align:right;">
+                        <? echo $data['page'];?>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->
+</section>
+
+<div class="modal fade" id="modalContent" tabindex="-2" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="form_register" method="post" action="?tpf=admin/board/process" enctype="multipart/form-data">
+            <input type="hidden" name="mode" id="mode" value="insert">
+            <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <input type="hidden" name="board_data_code" id="board_data_code">
+            <input type="hidden" name="delete_file" id="delete_file">
+            <input type="hidden" name="link" id="link">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPortfolio">게시물 관리</h4>
+            </div>
+            <div class="modal-body">
+
+            <h4><p class="text-light-blue"><i class="fa fa-fw fa-info-circle"></i> 글 <span id="board_sub_title">등록</span></p></h4>
+            <table class="table table-bordered">
+            <tr>
+                <td class="menu">작성자</td>
+                <td align="left"><input type="text" name="name" id="name" value="<?=$name?>" class="form-control input-sm"></td>
+            </tr>
+            <tr>
+                <td class="menu">제목</td>
+                <td align="left"><input type="text" name="title" id="title" class="form-control input-sm"></td>
+            </tr>
+            <tr>
+                <td class="menu">내용</td>
+                <td align="left"><textarea name="content" id="content" rows="10" cols="80"></textarea></td>
+            </tr>
+            <tr>
+                <td class="menu">파일</td>
+                <td align="left">
+                <p>
+                    <span id="file_list"></span>
+                </p>
+
+                <p style="padding-top:10px; float:left; width:100%;">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="addPrice();"><span class="glyphicon glyphicon-plus"></span> 파일추가</button><br>
+                </p>
+                <div id="list_file"><input type="file" name="file[]" class="form-control input-sm" style="width:100%; display:inline; margin-bottom:10px;"></div>
+                </td>
+            </tr>
+            </table>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" onclick="register()" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" onclick="reply()" id="display_reply" style="display:none;" class="btn btn-danger">답변 페이지로 전환</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="list_file_tag" class="sr-only">
+    <input type="file" name="file[]" class="form-control input-sm" style="width:100%; display:inline; margin-bottom:10px;">
+</div>
+<script src="/common/ckeditor/ckeditor.js"></script>

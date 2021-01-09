@@ -1,0 +1,148 @@
+<link href="http://whoisict.com/html/css/s9soft_juso.css" rel="stylesheet">
+
+<!-- 회원가입 페이지 Area -->
+<div class="page-area">
+
+    <!-- 페이지 타이틀 -->
+    <div class="page-title-area">
+        <h2>회원<?=$title?></h2>
+    </div>
+    <!-- //페이지 타이틀 -->
+
+    <!-- 약관동의 form -->
+    <h3>회원정보입력<span><strong>*</strong>필수 입력 항목입니다.</span></h3>
+
+    <table class="join-member-info-form">
+    <form name="form" method="post" action="?tpf=member/process">
+    <input type="hidden" name="mode" value="<?=$mode?>">
+        <tr class="join-member-id">
+            <th scope="row">아이디<strong>*</strong></th>
+            <td>
+<?php
+if (!isLogin()) {   // 등록
+echo '          <input type="text" name="id" /><a href="#none" onclick="onclickCheckId();">중복확인</a><span>영문과 숫자 4~15자로 입력하세요.</span>';
+}
+else {              // 수정
+echo $arrMember['id'];
+}
+?>
+            </td>
+        </tr>
+<?php
+if (isLogin()) {   // 수정
+?>
+        <tr class="join-member-pw1">
+            <th scope="row">현재 비밀번호<strong>*</strong></th>
+            <td><input type="password" name="current_password" /><span>비밀번호 변경시 입력하세요.</span></td>
+        </tr>
+<?php
+}
+?>
+        <tr class="join-member-pw1">
+            <th scope="row">비밀번호<strong>*</strong></th>
+            <td><input type="password" name="password" /><span>영문소문자와 숫자 포함 8~15자로 입력하세요.</span></td>
+        </tr>
+        <tr class="join-member-pw2">
+            <th scope="row">비밀번호 확인<strong>*</strong></th>
+            <td><input type="password" name="password_confirm" /><span>비밀번호 확인을 위해 한번 더 입력하세요.</span></td>
+        </tr>
+        <tr class="join-member-name">
+            <th scope="row">이름<strong>*</strong></th>
+            <td><input type="text" name="name" value="<?=@$arrMember['name']?>" /><span>실명을 입력하세요.</span></td>
+        </tr>
+        <tr class="join-member-birth">
+            <th scope="row">생년월일<strong>*</strong></th>
+            <td>
+            <select name="birthday_year">
+<?php
+$start_year = date('Y');
+for($i=$start_year; $i>=1940; $i--) {
+echo '          <option value="'.$i.'"'; if(@$arrMember['birthday'][0] == $i) { echo ' selected';} echo '>'.$i.'</option>';
+}
+?>
+            </select>
+            <span>년</span>
+            <select name="birthday_month">
+<?php
+for($i=1; $i<=12; $i++) {
+echo '          <option value="'.$i.'"'; if(@$arrMember['birthday'][1] == $i) { echo ' selected';} echo '>'.$i.'</option>';
+}
+?>
+            </select>
+            <span>월</span>
+            <select name="birthday_day">
+<?php
+for($i=1; $i<=31; $i++) {
+echo '          <option value="'.$i.'"'; if(@$arrMember['birthday'][2] == $i) { echo ' selected';} echo '>'.$i.'</option>';
+}
+?>
+            </select>
+            <span>일</span>
+            </td>
+        </tr>
+        <tr class="join-member-gender">
+            <th scope="row">성별<strong>*</strong></th>
+            <td>
+                <input type="radio" name="sex" value="m"<?if(@$arrMember['sex'] == 'm') { echo ' checked';}?> /><label for="j_gender1">남자</label><input type="radio" name="sex" value="f"<?if(@$arrMember['sex'] == 'f') { echo ' checked';}?> /><label for="j_gender1">여자</label>
+            </td>
+        </tr>
+        <tr class="join-member-email">
+            <th scope="row">이메일<strong>*</strong></th>
+            <td>
+                <input type="text" name="email" value="<?=@$arrMember['email']?>" />
+                <a href="#none" onclick="checkEmailForm();" class="btn_email_confirm">중복확인</a><input type="checkbox" name="is_receive_email" value="y"<?if(@$arrMember['is_receive_email'] == 'y') { echo ' checked';}?> /><label for="email_agree">E-mail 수신동의</label>
+                <p>* 이메일 수신에 동의하시면 여러가지 혜택과 이벤트 정보를 받아 보실 수 있습니다.</p>
+            </td>
+        </tr>
+        <tr class="join-member-mobile">
+            <th scope="row">휴대전화<strong>*</strong></th>
+            <td>
+                <select name="mobile1">
+<?php
+foreach($arrMobileType as $key => $val) {
+echo '              <option value="'.$val.'"'; if(@$arrMember['mobile'][0] == $val) { echo ' selected';} echo '>'.$val.'</option>';
+}
+?>
+                </select><span>-</span><input type="text" name="mobile2" value="<?=@$arrMember['mobile'][1]?>" maxlength="4" /><span>-</span><input type="text" name="mobile3" value="<?=@$arrMember['mobile'][2]?>" maxlength="4" /><input type="checkbox" name="is_receive_sms" value="y"<?if(@$arrMember['is_receive_sms'] == 'y') { echo ' checked';}?> /><label for="sms_agree">SMS 수신동의</label>
+                <p>* SMS 수신에 동의하시면 여러가지 혜택과 이벤트 정보를 받아 보실 수 있습니다.</p>
+            </td>
+        </tr>
+        <tr class="join-member-tel">
+            <th scope="row">전화번호</th>
+            <td>
+                <select name="tel1">
+<?php
+foreach($arrTelType as $key => $val) {
+echo '              <option value="'.$val.'"'; if(@$arrMember['tel'][0] == $val) { echo ' selected';} echo '>'.$val.'</option>';
+}
+?>
+                </select><span>-</span><input type="text" name="tel2" value="<?=@$arrMember['tel'][1]?>" maxlength="4" /><span>-</span><input type="text" name="tel3" value="<?=@$arrMember['tel'][1]?>" maxlength="4" />
+            </td>
+        </tr>
+        <tr class="join-member-addr">
+            <th scope="row">주소</th>
+            <td>
+                <input type="text" name="zipcode" value="<?=@$arrMember['zipcode']?>" readonly style="width:15%; background-color:#dddddd;"/><a href="#none" onclick="callAddress();">주소입력</a><br />
+                <input type="text" class="input-addr" id="address" placeholder="주소입력 예) 느티마을4단, ㄱㄴㅍㅇㄴㅅ, 여의 메리츠, 행자부, 목동아파트, 테헤란로 152" style="display:none; margin:5px 0; width:100%;">
+                <input type="text" name="addr" value="<?=@$arrMember['addr']?>" readonly style="margin:5px 0; width:100%; background-color:#dddddd;" /><br />
+                <input type="text" name="addr_etc" value="<?=@$arrMember['addr_etc']?>" placeholder="상세주소" style="width:100%;" />
+            </td>
+        </tr>
+        </form>
+    </table>
+
+    <!-- 버튼 -->
+    <p class="join-btn-area">
+    <a href="/" class="join-btn-cancel">취소</a>
+    <a href="#none" onclick="register('<?=$mode?>');" class="join-btn-ok">확인</a>
+    </p>
+    <!-- //버튼 -->
+    <!-- //약관동의 form -->
+
+</div>
+<!-- //회원가입 페이지 Area-->
+
+<form name="formID" method="post" action="?tpf=member/process">
+<input type="hidden" name="mode" value="checkId">
+<input type="hidden" name="id">
+</form>

@@ -1,0 +1,38 @@
+<table border="0" cellspacing="0" cellpadding="5" width="100%">
+<tr>
+    <td colspan="2">
+    <h1><?=$title?></h1>
+    </td>
+    <td align="right">
+    <h1><a href="index.php?tpf=board/list&board_code=1">more</a></h1>
+    </td>
+</tr>
+<?php
+foreach($list as $key => $val) {
+    echo '  <tr>
+                <td>'.$val['code'].'</td>
+                <td>'.$val['name'].'</td>
+                <td><a href="?tpf=board/view&board_code=1&code='.$val['code'].'">'.$val['title'].'</a></td>
+            </tr>';
+}
+?>
+</table>
+
+<br>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+<form name="form_register" method="post" action="./">
+<tr>
+    <td>폼 등록</td>
+</tr>
+<tr>
+    <td>
+    <input type="text" name="title" style="width:50%;">
+    </td>
+</tr>
+<tr>
+    <td>
+    <input type="button" value="등록" onclick="register();">
+    </td>
+</tr>
+</form>
+</table>

@@ -1,0 +1,30 @@
+<!-- member-wrap -->
+<section class="member-wrap">
+
+    <!-- member-title -->
+    <h2 class="member-title">로그인</h2>
+    <!-- //member-title -->
+
+    <!-- login-form-wrap -->
+    <section class="login-form-wrap">
+        <form name="form" action="?tpf=member/login_process" method="post">
+        <input type="hidden" name="return_url" value="<?=@$return_url?>">
+            <fieldset>
+                <legend class="hidden">로그인</legend>
+                <ul class="login-input">
+                    <li><input type="text" name="id" value="<?=$save_id?>" placeholder="아이디" /></li>
+                    <li><input type="password" name="password" placeholder="비밀번호" /></li>
+                </ul>
+                <p class="save-id-wrap"><input type="checkbox" id="id_save" name="save_id" value="y" <?=$save_id_checked?> /><label for="id_save">아이디저장</label></p>
+                <p class="find-btn-wrap"><a href="?tpf=member/find">아이디/비밀번호 찾기</a></p>
+                <p class="login-btn-wrap">
+                    <a href="#" onclick="register();" class="btn-login">로그인</a>
+                    <a href="?tpf=member/stipulation" class="btn-join">회원가입</a>
+                </p>
+            </fieldset>
+        </form>
+    </section>
+    <!-- //login-form-wrap -->
+
+</section>
+<!-- //member-wrap -->

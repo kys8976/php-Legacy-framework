@@ -1,0 +1,37 @@
+<!-- member-wrap -->
+<section class="member-wrap">
+
+    <!-- member-title -->
+    <h2 class="member-title">회원가입</h2>
+    <!-- //member-title -->
+
+    <!-- join-form-wrap -->
+    <section class="join-form-wrap">
+        <form name="form" action="?tpf=member/form" method="post">
+            <fieldset>
+                <legend>이용약관</legend>
+                <div class="box-wrap">
+                <?=$arrContract['provision']?>
+                </div>
+                <p class="join-agree"><input type="checkbox" id="join-provision" name="agree1" /><label for="join-provision">이용약관에 동의합니다. <strong>(필수)</strong></label></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>개인정보 수집 및 이용에 대한 안내</legend>
+                <div class="box-wrap">
+                <?=$arrContract['privacy']?>
+                </div>
+                <p class="join-agree"><input type="checkbox" id="join-policy" name="agree2" /><label for="join-policy">개인정보 수집 및 이용에 동의합니다. <strong>(필수)</strong></label></p>
+            </fieldset>
+        </form>
+
+        <p class="join-btn-wrap">
+            <a href="/" class="btn-cancel">취소</a>
+            <a href="#" onclick="register()" class="btn-confirm">다음</a>
+        </p>
+
+    </section>
+    <!-- //join-form-wrap -->
+
+</section>
+<!-- //member-wrap -->

@@ -1,0 +1,39 @@
+<!-- 회원가입 페이지 Area -->
+<div class="page-area">
+
+    <!-- 페이지 타이틀 -->
+    <div class="page-title-area">
+        <h2>회원가입</h2>
+    </div>
+    <!-- //페이지 타이틀 -->
+
+    <!-- 약관동의 form -->
+    <form name="form" action="?tpf=member/form" method="post">
+    <!-- 약관동의 -->
+    <h3>이용약관</h3>
+    <div class="provision-area">
+        <div class="provision-inner">
+            <?=nl2br($arrContract['provision'])?>
+        </div>
+        <p class="agree-area"><input type="checkbox" id="provision-agree1" name="agree1" value="y" /><label for="provision-agree1">이용약관에 동의합니다. (필수)</label></p>
+    </div>
+    <!-- //약관동의 -->
+
+    <!-- 개인정보취급방침 -->
+    <h3>개인정보 취급방침</h3>
+    <div class="provision-area">
+        <div class="provision-inner">
+            <?=nl2br($arrContract['privacy'])?>
+        </div>
+        <p class="agree-area"><input type="checkbox" id="provision-agree2" name="agree2" value="y" /><label for="provision-agree2">개인정보 취급방침에 동의합니다. (필수)</label></p>
+    </div>
+    <!-- //개인정보취급방침 -->
+
+    <!-- 버튼 -->
+    <p class="join-btn-area"><a href="/" class="join-btn-cancel">취소</a><a href="javascript:void(0);" onclick="register()" class="join-btn-ok">다음</a></p>
+    <!-- //버튼 -->
+    </form>
+    <!-- //약관동의 form -->
+
+</div>
+<!-- //회원가입 페이지 Area-->

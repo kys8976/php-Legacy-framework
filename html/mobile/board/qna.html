@@ -1,0 +1,101 @@
+<!-- board-wrap -->
+<section class="board-wrap">
+
+    <!-- board-title -->
+    <h2 class="board-title"><?=$board_info['title']?></h2>
+    <!-- //board-title -->
+
+    <!-- board-search-wrap -->
+    <section class="board-search-wrap">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <fieldset>
+                <legend>검색</legend>
+                <p class="search-select-wrap">
+                <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                </select>
+                </p>
+                <p class="search-input-wrap"><input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" /></p>
+                <p class="search-btn-wrap"><a href="#" onclick="form_search.submit();">검색</a></p>
+            </fieldset>
+        </form>
+    </section>
+    <!-- //board-search-wrap -->
+
+<?php
+if (!empty($arrCategory)) {
+?>
+<!-- 게시판 네비 -->
+<section class="category-tab">
+    <ul>
+        <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+    </ul>
+</section>
+<!-- //게시판 네비 -->
+<?php
+}
+?>
+
+    <!-- faq-wrap -->
+    <section class="faq-wrap">
+        <!-- faq-list -->
+<?php
+if (!empty($data['list'])) {
+    $start_number = $data['start_number'];
+    foreach($data['list'] as $key => $val) {
+    echo '
+        <section class="faq-list">
+            <h4 class="f-wrap"><a href="#">'; if($val['category'] != '') { echo '<strong>['.$val['category'].']</strong> ';} echo $val['title'].'</a></h4>
+            <div class="q-wrap">
+                <p>'.nl2br($val['content']).'</p>
+            </div>
+        </section>';
+        $start_number--;
+    }
+}
+else {
+    echo '  <div align="center" style="margin:20px;">등록된 게시물이 없습니다.</div>';
+}
+?>
+        <!-- //faq-list -->
+    </section>
+    <!-- //faq-wrap -->
+
+    <!-- btn -->
+<?php
+if ($board_info['auth_write'] != 1) {   // 최고관리자 권한이 아닐때
+    echo '<p class="btn-write-wrap"><a href="?tpf=board/write&board_code='.$board_code.'" class="btn-write">글쓰기</a></p>';
+}
+?>
+    <!-- //btn -->
+
+    <!-- paging -->
+    <? echo $data['page'];?>
+    <!-- paging -->
+
+</section>
+<!-- //board-wrap -->
+  <script type="text/javascript">
+	$(function(){
+		// 답변 글 보이기
+		$(".faq-list").find(".f-wrap").click(function(e){
+		e.preventDefault();
+			$(".faq-list").find(".f-wrap").not(this).removeClass("on").next().slideUp(300);
+			$(this).addClass("on").next().slideToggle(300,function(){
+				if($(this).css("display") == "none" ){
+					$(this).prev().removeClass("on");
+				}
+			});
+		});
+	});
+  </script>

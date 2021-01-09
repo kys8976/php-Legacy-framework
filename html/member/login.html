@@ -1,0 +1,38 @@
+<!-- 로그인 페이지 Area -->
+<div class="page-area">
+
+    <!-- 페이지 타이틀 -->
+    <div class="page-title-area">
+        <h2>로그인</h2>
+    </div>
+    <!-- //페이지 타이틀 -->
+
+    <!-- 로그인 form -->
+    <div class="login-form-area">
+        <div class="login-form-inner">
+            <form name="form" action="?tpf=member/login_process" method="post">
+            <input type="hidden" name="return_url" value="<?=@$return_url?>">
+            <legend class="hidden">로그인</legend>
+            <div class="login-input">
+                <p><input type="text" name="id" value="<?=$save_id?>" placeholder="아이디를 입력해주세요." /></p>
+                <p><input type="password" id="l_pw" name="password" onkeyup="if(event.keyCode == 13) register()" placeholder="비밀번호를 입력해주세요." /></p>
+            </div>
+            <p class="login-btn-area"><a href="#" onclick="register();" class="login-btn">로그인</a></p>
+            <p class="auto-login-area"><input type="checkbox" name="save_id" value="y" <?=$save_id_checked?> /><label for="auto_login">자동로그인</label></p>
+            </form>
+            <div class="login-etc-area">
+                <ul>
+                    <li>아이디 / 비밀번호를 잊으셨나요?<a href="?tpf=member/find">아이디/비밀번호 찾기</a></li>
+                    <li>아직 회원이 아니신가요?<a href="?tpf=member/stipulation">회원가입</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- //로그인 form -->
+
+    <!-- 버튼 -->
+    <p class="join-btn-area"><a href="/" class="join-btn-cancel">메인으로</a></p>
+    <!-- //버튼 -->
+
+</div>
+<!-- //로그인 페이지 Area-->

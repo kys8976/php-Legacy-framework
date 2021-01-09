@@ -1,0 +1,104 @@
+<?=@$board_info['header']?>
+
+<!-- 게시판 목록 Area -->
+<div class="board-list-area gallery-board-list-area">
+    <!-- 게시판 네비 -->
+    <div class="board-naving<?=@$display_navi?>">
+        <ul>
+            <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+    echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+        </ul>
+    </div>
+    <!-- // 게시판 네비 -->
+
+    <!-- 게시판 타이틀 -->
+    <div class="board-title-area">
+        <h2><?=$board_info['title']?></h2>
+    </div>
+    <!-- //게시판 타이틀 -->
+
+    <!-- 게시판 total -->
+    <div class="board-total-area">
+        <p>Total <strong><?=$data['total']?></strong>건<span><?=$data['page_count']?> 페이지</span></p>
+    </div>
+    <!-- //게시판 total -->
+
+    <!-- 게시판 목록 table -->
+    <div class="webzine-board-list">
+        <ul>
+<?php
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        echo '<li onclick="location.href=\'?tpf=board/view&board_code='.$this->reqData['board_code'].'&code='.$val['code'].'\'">
+                <a href="#none" style="width:20%;">';
+        if ($val['image_url']) {    // 첨부파일 존재할때
+            echo ' <img src="'.$val['image_url'].'" title="첨부파일" style="width:100%;">';
+        }
+        else {
+            echo ' <img src="/img/noimage.gif" title="파일없음" style="width:100%;">';
+        }
+        echo '  </a>
+                <div class="gallery-list-cont">
+                    <ul>
+                        <li class="gallery-list-subject"><a href="#none">'.$val['title'].'</a><span>[1]</span></li>
+                        <li class="gallery-list-name"><span>작성자 : </span></span>'.$val['name'].'</li>
+                        <li class="gallery-list-date"><span>작성일 : </span>'.$val['reg_date_short'].'</li>
+                        <li class="gallery-list-cont-view" style="line-height:1.5em"><a href="#" class="ellipsis"><pre>'.$val['content'].'</pre></a></li>
+                    </ul>
+                </div>
+            </li>';
+    }
+}
+else {
+    echo '  <tr>
+                <td class="empty_list" colspan="5">등록된 게시물이 없습니다.</td>
+            </tr>';
+}
+?>
+        </ul>
+    </div>
+    <!-- //게시판 목록 table -->
+
+    <!-- 버튼 -->
+    <div class="board-btn-area">
+        <p class="boad-btn-write"><a href="#">글쓰기</a></p>
+    </div>
+    <!-- //버튼 -->
+
+    <!-- 페이징 -->
+    <? echo $data['page'];?>
+    <!-- //페이징 -->
+
+    <!-- 검색 -->
+    <div class="board-search-area">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+        <fieldset>
+            <legend class="hidden">게시물 검색</legend>
+<!--
+            <select name="field_cate" id="field_cate">
+                <option value>카테고리</option>
+                <option value="category1">gategory1</option>
+                <option value="category2">category2</option>
+            </select>
+-->
+            <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+echo '          <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+            </select>
+            <input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" />
+            <input type="submit" value="검색" />
+        </fieldset>
+        </form>
+    </div>
+    <!-- //검색 -->
+
+</div>
+<!-- //게시판 목록 Area-->

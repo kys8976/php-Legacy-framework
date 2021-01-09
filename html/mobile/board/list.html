@@ -1,0 +1,142 @@
+<!-- board-wrap -->
+<section class="board-wrap">
+
+    <!-- board-title -->
+    <h2 class="board-title"><?=$board_info['title']?></h2>
+    <!-- //board-title -->
+
+<?php
+if (!empty($arrCategory)) {
+?>
+<!-- 게시판 네비 -->
+<section class="category-tab">
+    <ul>
+        <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+    </ul>
+</section>
+<!-- //게시판 네비 -->
+<?php
+}
+?>
+
+    <!-- basic-board-list -->
+    <table class="basic-board-list">
+        <colgroup>
+            <col width="8%" />
+            <col width="15%" />
+            <col width="*" />
+            <col width="15%" />
+            <col width="12%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="">번호</th>
+<?php
+if($board_info['category'] != '') {
+    echo '      <th scope="">구분</th>';
+}
+?>
+                <th scope="">제목</th>
+                <th scope="">작성자</th>
+                <th scope="">등록일</th>
+                <th scope="">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+if (!empty($notice['list'])) {
+    foreach($notice['list'] as $key => $val) {
+        echo '  <tr>
+                    <td class="board-num">공지</td>';
+        if($board_info['category'] != '') { echo '<td class="board-category">['.$val['category'].']</td>';}
+        echo '      <td class="board-subject"><a href="?tpf=board/view&board_code='.$this->reqData['board_code'].'&code='.$val['code'].'">'.$val['title'].'</a>';
+        if ($val['image_url']) {    // 첨부파일 존재할때
+            echo ' <img src="/img/common/icon_file.gif" alt="첨부파일" class="list-file" />';
+        }
+        echo'       </td>
+                    <td class="board-name">'.$val['name'].'</td>
+                    <td class="board-date">'.$val['reg_date_short'].'</td>
+                    <td class="board-hit">'.$val['hitting'].'</td>
+                </tr>';
+    }
+}
+
+// 리스트
+if (!empty($data['list'])) {
+    $start_number = $data['start_number'];
+    foreach($data['list'] as $key => $val) {
+        echo '  <tr>
+                    <td class="board-num">'.$start_number.'</td>';
+        if($board_info['category'] != '') { echo '<td class="board-category">['.$val['category'].']</td>';}
+        if($val['is_secret'] == 'y') {  // 비밀글
+            echo '  <td class="board-subject"><a href="#none" onclick="onclickView('.$this->reqData['board_code'].','.$val['code'].');return false;"><img src="/img/icon_lock.gif" alt="비밀글" class="board-list-lock-icon">'.$val['title'].'</a>';
+        }
+        else {                          // 일반글
+            echo '  <td class="board-subject"><a href="?tpf=board/view&board_code='.$this->reqData['board_code'].'&code='.$val['code'].'">'.$val['title'].'</a>';
+        }
+        if ($val['image_url']) {    // 첨부파일 존재할때
+            echo ' <img src="/img/common/icon_file.gif" alt="첨부파일" class="list-file" />';
+        }
+        echo'       </td>
+                    <td class="board-name">'.$val['name'].'</td>
+                    <td class="board-date">'.$val['reg_date_short'].'</td>
+                    <td class="board-hit">'.$val['hitting'].'</td>
+                </tr>';
+        $start_number--;
+    }
+}
+else {
+    echo '  <tr class="no-data">
+                <td>등록된 게시물이 없습니다.</td>
+            </tr>';
+}
+?>
+        </tbody>
+    </table>
+    <!-- //basic-board-list -->
+
+    <!-- btn -->
+<?php
+if ($board_info['auth_write'] != 1) {   // 최고관리자 권한이 아닐때
+    echo '<p class="btn-write-wrap"><a href="?tpf=board/write&board_code='.$board_code.'" class="btn-write">등록</a></p>';
+}
+?>
+    <!-- //btn -->
+
+    <!-- paging -->
+    <? echo $data['page'];?>
+    <!-- paging -->
+
+    <!-- board-search-wrap -->
+    <section class="board-search-wrap">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <fieldset>
+                <legend>검색</legend>
+                <p class="search-select-wrap">
+                    <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '          <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                    </select>
+                </p>
+                <p class="search-input-wrap"><input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" /></p>
+                <p class="search-btn-wrap"><a href="#" onclick="form_search.submit();">검색</a></p>
+            </fieldset>
+        </form>
+    </section>
+    <!-- //board-search-wrap -->
+
+</section>
+<!-- //board-wrap -->
+
+	<script type="text/javascript">
+		$(".basic-board-list .no-data td").attr("colspan", $(".basic-board-list thead th").length);
+	</script>

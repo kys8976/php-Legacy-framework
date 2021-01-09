@@ -1,0 +1,368 @@
+@charset "utf-8";
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css'); /*나눔고딕*/
+
+body{
+	background:#f8f8f8; 
+	font-family:'Nanum Gothic',Gulim, Dotum, Helvetica,Sans-serif; 
+}
+
+/* -------- 회원가입  -------- */
+ /* -------- 공통  -------- */
+.page-area{
+	zoverflow:hidden;
+	margin:0 auto;
+	padding:50px 30px;
+	width:100%;
+	box-sizing:border-box;
+	background:#fff;
+}
+
+	/* 타이틀 */
+.page-title-area h2{ 
+	margin:0 0 47px 0; 
+	font-weight:bold; font-size:34px; color:#333;
+}
+
+	/* 타이틀*/
+.page-area h3{
+	margin:30px 0 23px 0;
+	font-weight:bold; font-size:23px; line-height:1; color:#575aab;
+}
+
+	/* 하단 버튼 */
+.join-btn-area{
+	margin-top:50px;
+	text-align:center;
+}
+.join-btn-area a{
+	display:inline-block;
+	margin:0 5px;
+	width:200px; height:50px;
+	box-sizing:border-box;
+	font-weight:bold; font-size:16px; line-height:50px;
+	vertical-align:top;
+}
+.join-btn-cancel{
+	background:#fff;
+	border:1px solid #babaca;
+	color:#444;
+}
+.join-btn-ok{
+	background:#6467af;
+	color:#fff;
+}
+/* -------- 공통 End -------- */
+
+/* -------- 약관동의 -------- */
+/* 약관동의 box */
+.provision-inner{
+	overflow-x:hidden;
+	padding:20px;
+	width:100%; height:235px;
+	box-sizing:border-box;
+	border:1px solid #ddd;
+	font-size:13px; line-height:1.7; color:#777;
+}
+
+/* 약관동의 checkbox */
+.provision-area{
+	overflow:hidden;
+}
+.provision-area .agree-area{
+	float:right;
+	margin:15px 0 0 0;
+}
+.provision-area .agree-area input{
+	display:inline-block;
+	width:15px; height:15px;
+}
+.provision-area .agree-area label{
+	display:inline-block;
+	font-size:13px; line-height:15px; color:#555;
+}
+/* -------- 약관동의 End -------- */
+
+ /* -------- 회원정보입력 -------- */
+	/* 회원정보 타이틀 span */
+.page-area h3 strong{
+	margin:0 5px 0 20px;
+	font-weight:bold; font-size:15px; color:#f91c40;
+}
+.page-area h3 span{
+	font-weight:normal;
+	font-size:13px; color:#555;
+}
+
+	/* 회원정보입력폼 */
+.join-member-info-form{
+	width:100%;
+	border-top:2px solid #333;
+	font-size:13px; line-height:1.5; color:#555;
+}
+.join-member-info-form tr{
+	border-bottom:1px solid #dedede;
+}
+.join-member-info-form th{  
+	padding:6px 13px 7px;
+	width:20%;
+	background:#f3f3f7;
+	font-weight:bold; text-align:left; 
+	vertical-align:middle;
+}
+.join-member-info-form th strong{ /* 필수정보 */
+	margin:0 0 0 5px;
+	font-weight:bold; font-size:15px; color:#f91c40;
+}
+.join-member-info-form td{
+	padding:6px 10px 7px ;
+	line-height:30px;
+}
+
+	 /* input = text, password style*/
+.join-member-info-form input[type="text"], .join-member-info-form input[type="password"]{
+	margin:0 10px 0 0; padding:0 0 0 8px;
+	width:30%; height:30px; 
+	box-sizing:border-box;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+
+	/* select style */
+.join-member-info-form select{
+	margin:0 10px 0 0; padding:0 0 0 3px;
+	width:10%; height:28px;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+
+	/* ipnut = radio style*/
+.join-member-info-form input[type="radio"]{
+	margin:0; padding:0;
+	width:15px;
+	height:15px;
+}  
+
+	/* input = checkbox style */
+.join-member-info-form input[type="checkbox"]{
+	margin:0; padding:0;
+	width:15px; height:15px;
+}
+.join-member-info-form td label{
+	margin:0 40px 0 7px;
+	color:#555;
+}
+
+	/* textarea */
+.join-member-info-form textarea{ 
+	padding:5px;
+	width:100%; 
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+
+	/* file */
+.join-member-info-form input[type="file"]{ 
+	font-size:12px;
+}
+.join-member-file td{ 
+	padding:11px 10px;
+}
+
+	/* 중복확인, 우편번호검색 버튼 */
+.join-member-info-form a{
+	display:inline-block;
+	margin:0 10px 0 0; padding:0 20px;
+	height:28px;
+	background:#9898a5;
+	line-height:28px; color:#fff; text-align:center;
+	vertical-align:middle;
+}
+
+	/* 부가설명 */
+.join-member-info-form span{ 
+	margin:0 10px 0 0;
+	font-size:12px; color:#555;
+}
+
+	/* 이메일 SMS 수신동의 txt */
+.join-member-info-form p{
+	font-size:12px; color:#6467af;
+}
+
+	/* 자동입력방지 */
+.join-member-auto-none img{
+	width:113px; height:30px;
+}
+.join-member-auto-none a{
+	margin:0 0 0 10px;
+	border:1px solid #d8d8d8;
+	background:#f5f5f5;
+	color:#444;
+}
+.join-member-auto-none p{
+	color:#555;
+}
+
+	/* input width 값 */
+.join-member-birth input[type="text"]{
+	width:10%;
+}
+.join-member-tel input[type="text"]  ,
+.join-member-mobile input[type="text"]{
+	width:18%;
+}
+.join-member-addr #zipcode{
+	width:15%;
+}
+.join-member-addr #j_addr1, .join-member-addr #j_addr2{
+	margin:8px 0 0 0;
+	width:100%;
+}
+.join-member-date input[type="text"]{
+	width:18%;
+}
+ /* -------- 회원정보입력 End -------- */
+
+
+/* -------- 회원가입완료 -------- */
+
+.join-massage-area{
+	padding:100px 0;
+	width:100%;
+	border-top:2px solid #333;
+	border-bottom:1px solid #bbb;
+	text-align:center;
+}
+	/* 회원가입완료 txt */
+.join-massage-txt{
+	font-size:15px; line-height:1.5; color:#999;
+}
+.join-massage-txt strong{ /*Congratulation*/
+	font-weight:bold; font-size:35px;  line-height:48px; 
+	font-family:vadana; color:#6467af;
+}
+.join-massage-txt span{ /*회원가입이 성공적으로 되었습니다!*/
+	font-size:30px; line-height:48px; color:#333;
+	letter-spacing:-1px;
+}
+
+	/* 회원정보 view */
+.join-massage-join-info{
+	margin:50px 0 0 0;
+}
+.join-massage-join-info p{
+	font-size:13px; line-height:1.5;
+}
+.join-massage-join-info dl{
+	overflow:hidden;
+	margin:30px auto 0 auto;
+	width:485px;
+	border:1px solid #d8d8d8;
+	border-bottom:0 none;
+	font-size:13px; line-height:55px;
+}
+.join-massage-join-info dt{
+	float:left; clear:both;
+	width:179px; height:55px;
+	border-bottom:1px solid #d8d8d8;
+	border-right:1px solid #d8d8d8;
+	background:#f3f3f7;
+}
+.join-massage-join-info dd{
+	float:left;
+	width:305px; height:55px;
+	border-bottom:1px solid #d8d8d8;
+	font-weight:bold; color:#6467af;
+}
+/* -------- 회원정보입력 End -------- */
+
+/* -------- 로그인 -------- */
+.login-form-area{
+	padding:100px 0;
+	width:100%;
+	border-top:2px solid #333;
+	border-bottom:1px solid #bbb;
+	text-align:center; 
+	font-size:0; line-height:0;
+}
+
+.login-form-area .login-form-inner{
+	margin:0 auto;
+	width:460px;
+}
+
+	 /* input style */
+.login-form-area input[type="text"],.login-form-area input[type="password"]{
+	margin:0 0 10px 0; padding:0 0 0 8px;
+	width:350px; height:45px;
+	box-sizing:border-box;
+	border:1px solid #d8d8d8;
+	font-size:12px; color:#555;
+}
+
+	 /* 로그인 btn */
+.login-input, .login-btn-area{
+	display:inline-block;
+	vertical-align:top;
+}
+.login-btn-area a{
+	display:block;
+	margin:0 0 0 10px;
+	width:100px; height:100px;
+	background:#6467af;
+	font-size:16px; line-height:100px;
+	color:#fff; text-align:center;
+}
+
+	/* 자동로그인 */
+.auto-login-area{
+	clear:both;
+	margin:5px 0 0 0;
+	text-align:left;
+}
+.auto-login-area input[type="checkbox"]{ 
+	display:inline-block;
+	margin:0; padding:0;
+	width:15px; height:15px;
+	vertical-align:top;
+}
+.auto-login-area label{
+	display:inline-block;
+	margin:0 0 0 5px;
+	font-size:13px; line-height:13px; color:#555;
+	vertical-align:top;
+}
+
+	/* 아이디비번찾기 회원가입 btn */
+.login-etc-area{
+	margin:30px 0 0 0;
+	border-top:1px solid #ddd;
+	font-size:12px; line-height:1.5; text-align:left;
+}
+.login-etc-area ul{
+	margin:20px 0 0 0;
+	line-height:30px;
+}
+.login-etc-area li:first-child{
+	margin:0 0 10px 0;
+}
+.login-etc-area a{
+	display:block; float:right;
+	width:150px; height:30px;
+	box-sizing:border-box;
+	border:1px solid #ddd;
+	background:#f8f8f8;
+	font-weight:bold; line-height:28px; color:#444;
+	text-align:center;
+}
+/* -------- 로그인 End -------- */
+
+/* -------- 아이디/비밀번호 찾기 -------- */
+/* 참고-------table form은 회원정보 입력 페이지와 동일함 */
+.find-area h3 span{
+	margin:0 0 0 20px;
+}
+.join-btn-area:first-of-type{ /* 아이디 찾기 밑 버튼 여백 추가 */
+	margin-bottom:100px;
+}
+/* -------- 아이디/비밀번호 찾기 End -------- */

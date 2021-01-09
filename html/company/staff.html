@@ -1,0 +1,34 @@
+<!-- 게시판 목록 Area -->
+<div class="board-list-area    gallery-board-list-area">
+    <div class="board-title-area">
+        <h2>임원진</h2>
+    </div>
+    <div class="gallery-board-list">
+        <ul>
+<?php
+if (!empty($data['list'])) {
+    foreach($data['list'] as $key => $val) {
+        echo '  <li style="margin-right: 1%;">
+        ';
+        if (file_exists(_USER_DIR."/staff/".$val['code'])) { echo '<img src="'._USER_URL.'/staff/'.$val['code'].'" style="max-width:240px; max-height:159.42px;">';}
+        else { echo '<img src="/img/noimage.gif">';}
+         echo'
+                    <div class="gallery-list-cont">
+                        <ul>
+                            <li class="gallery-list-subject"><a href="">'.$val['name'].'</a></li>
+                            <li class="gallery-list-cont-view "><a href="" class="ellipsis">'.$val['career'].'</a></li>
+                            <li class="gallery-list-user"><span class="gallery-list-name">'.$val['position'].'</span><span class="gallery-list-date">'.$val['reg_date'].'</span></li>
+                        </ul>
+                    </div>
+                </li>';
+    }
+}
+else {
+    echo '  등록된 게시물이 없습니다.';
+}
+?>
+        </ul>
+    </div>
+
+</div>
+<!-- //게시판 목록 Area-->

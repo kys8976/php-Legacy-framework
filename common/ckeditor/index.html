@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor Sample</title>
+	<script src="ckeditor.js"></script>
+</head>
+<body id="main">
+
+	<div class="adjoined-bottom">
+		<div class="grid-container">
+			<div class="grid-width-100">
+				<textarea name="content" id="content" rows="10" cols="80"></textarea>
+			</div>
+		</div>
+	</div>
+
+<script>
+var objEditor = CKEDITOR.replace('content', {
+    height: 300,
+    filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+    filebrowserImageUploadUrl: '/daemon/ckeditor_upload.php?command=QuickUpload&type=Images'
+});
+CKEDITOR.on('dialogDefinition', function (ev) {
+    var dialogName = ev.data.name;
+    var dialog = ev.data.definition.dialog;
+    var dialogDefinition = ev.data.definition;
+
+    if (dialogName == 'image') {
+        dialog.on('show', function (obj) {
+            this.selectPage('Upload'); //업로드텝으로 시작
+        });
+        dialogDefinition.removeContents('advanced'); // 자세히탭 제거
+        dialogDefinition.removeContents('Link'); // 링크탭 제거
+    }
+});
+/*
+$.fn.modal.Constructor.prototype.enforceFocus = function () {   // bootstrap & ckEdiotr 소스 방지 코드
+    modal_this = this
+    $(document).on('focusin.modal', function (e) {
+        if (modal_this.\$element[0] !== e.target && !modal_this.\$element.has(e.target).length && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
+        }
+    })
+}
+*/
+</script>
+
+</body>
+</html>

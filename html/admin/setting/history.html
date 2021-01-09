@@ -1,0 +1,121 @@
+<section class="content-header">
+    <h1>
+    연혁관리
+    <small>History</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Setting</li>
+        <li class="active">연혁관리</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <label style="margin-top:5px;">총 <?=$data['total']?> 건</label>
+                    <div class="box-tools pull-right" style="margin-bottom:5px;">
+
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                    <form name="form_list" method="post" action="?tpf=admin/setting/history_process">
+		            <input type="hidden" name="mode" id="mode">
+		            <thead>
+                    <tr>
+                        <td style="width:30px;"><input type="checkbox" name="select_all" onclick=selectAllCheckBox('form_list'); /></td>
+                        <td style="width:60px;">NO</td>
+                        <td style="width:100px;">년도</td>
+                        <td style="width:100px;">월</td>
+                        <td style="*">내용</td>
+                        <td style="width:80px;">명령</td>
+                    </tr>
+                    </thead>
+<?php
+// 리스트
+if (!empty($data['list'])) {
+    $start_number = 1;
+    foreach($data['list'] as $key => $val) {
+
+
+        echo '      <tr>
+                        <td><input type="checkbox" name="list[]" value="'.$val['code'].'" /></td>
+                        <td>'.$start_number.'</td>
+                        <td>'.$val['year'].'</td>
+                        <td>'.$val['month'].'</td>
+                        <td style="text-align:left;">'.nl2br($val['title']).'</td>
+                        <td><button type="button" onclick="onclickUpdate('.$val['code'].');" class="btn btn-primary btn-xs">상세보기</button></td>
+                    </tr>';
+                    $start_number++;
+    }
+}
+else {
+        echo '      <tr><td colspan="10"><br>등록된 자료가 없습니다.<br><br></td></tr>';
+}
+?>
+                    </form>
+                    </table>
+                    <br>
+                    <button type="button" onclick="selectDelete();" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i> 선택삭제</button>
+                    <button type="button" onclick="onclickInsert()"  class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i> 글 등록</button>
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->
+</section>
+
+<div class="modal fade" id="modalContent" tabindex="-2" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" style="width:650px;">
+        <div class="modal-content">
+            <form name="form_register" method="post" action="?tpf=admin/setting/history_process">
+            <input type="hidden" name="mode" id="mode" value="insert">
+		    <input type="hidden" name="code" id="code">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPortfolio">연혁 관리</h4>
+            </div>
+            <div class="modal-body">
+            <h4><p class="text-light-blue"><i class="fa fa-fw fa-info-circle"></i> 글 <span id="board_sub_title">등록</span></p></h4>
+            <table class="table table-bordered">
+                <tr>
+                    <td class="menu">년도</td>
+                    <td align="left">
+                    <select name="year" class="form-control input-sm" style="width:120px;">
+                    <option value="">선택</option>
+<?php
+for ($i=date('Y'); $i>=$start_year; $i--) {
+    echo '          <option value="'.$i.'"'; if(!empty($month) && $month == $i) echo ' selected'; echo '>'.$i.'</option>';
+}
+?>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                        <td class="menu">월</td>
+                    <td align="left">
+                    <select name="month" class="form-control input-sm" style="width:120px;">
+                    <option value="">선택</option>
+<?php
+for ($i=1; $i<=12; $i++) {
+    echo '          <option value="'.$i.'"'; if(!empty($month) && $month == $i) echo ' selected'; echo '>'.$i.'</option>';
+}
+?>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="menu">내용</td>
+                    <td align="left"><textarea class="form-control input-sm" name="title" rows="5" style="width:100%"></textarea></td>
+                </tr>
+            </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="register()" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

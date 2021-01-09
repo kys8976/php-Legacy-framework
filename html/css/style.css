@@ -1,0 +1,41 @@
+/* -------- 사용자 지정 css (사이트에 맞게 변경하세요) -------- */
+/* layout */
+#container {
+    width: 1060px;
+    padding: 10px;
+    margin: 0px auto;
+    border: 1px solid #bcbcbc;
+}
+#header {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #bcbcbc;
+}
+#main-content {
+    width: 100%;
+    margin-bottom: 10px;
+    float: right;
+    border: 1px solid #bcbcbc;
+}
+#sub-menu {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;    
+    float: left;
+    border: 1px solid #bcbcbc;
+}
+#sub-content {
+    width: 810px;
+    padding:10px;
+    margin-bottom: 10px;
+    float: right;
+    border: 1px solid #bcbcbc;
+}
+#footer {
+    clear: both;
+    padding: 10px;
+    border: 1px solid #bcbcbc;
+}
+
+.patner{width:1000px;height:55px;margin:0px auto;margin-top:10px;margin-bottom:10px;padding:0;border:1px solid #e6e6e6}
+.patner li{float:left;padding:15px}

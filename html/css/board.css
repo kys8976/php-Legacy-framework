@@ -1,0 +1,897 @@
+@charset "utf-8";
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css'); /*나눔고딕*/
+
+body{
+	background:#f8f8f8; 
+	font-family:'Nanum Gothic',Gulim, Dotum, Helvetica,Sans-serif; 
+}
+
+/* -------- 게시판 공통  -------- */
+	/* 게시판 area */
+.board-list-area{
+	box-sizing:border-box;
+	margin:0 auto; padding:20px 30px 60px;
+	width:100%;  /* 게시판 width */
+	background:#fff;
+}
+
+	/* 게시판 navi */
+.board-naving{
+	margin:0 0 55px 0;
+	text-align:center;
+	font-size:0; line-height:0;
+}
+.board-naving li{
+	display:inline-block;
+}
+.board-naving a{
+	display:block;
+	width:180px;
+	border-bottom:2px solid #ccc;
+	font-size:18px; line-height:42px; color:#aaa;
+}
+
+	/* on */
+.board-naving li.on a{
+	border-bottom:2px solid #777;
+	color:#666;
+}
+
+	/* hover */
+.board-naving li:hover a{
+	border-bottom:2px solid #777;
+	color:#666;
+}
+
+	/* 타이틀 */
+.board-title-area h2{ 
+	margin:0 0 47px 0; 
+	font-weight:bold;
+	font-size:34px;
+	color:#333;
+}
+
+	/* board 카테고리 */
+.qna-board-cate-area{
+	margin:0 0 30px 0;
+}
+.qna-board-cate-area ul{
+	text-align:center;
+	font-size:0; line-height:0;
+}
+.qna-board-cate-area li{
+	display:inline-block;
+	width:20%; /* 100 / 카테고리 갯수 = width */
+	margin-left:-1px;
+}
+.qna-board-cate-area li a{
+	display:block;
+	border:1px solid #e9e9e9;
+	border-bottom:1px solid #bbb;
+	background:#f9f9f9;
+	font-size:13px; line-height:44px;
+	vertical-align:middle;
+}
+
+	/* on */
+.qna-board-cate-area li.on a{
+	position:relative;
+	z-index:999;
+	border:1px solid #bbb;
+	border-bottom:1px solid #fff;
+	background:#fff;
+	font-weight:bold; color:#6667a1;
+}
+
+	/* hover */
+.qna-board-cate-area li a:hover{
+	font-weight:bold; color:#6667a1;
+}
+
+	 /* total */
+.board-total-area{
+	margin:0 0 14px 0;
+	font-size:14px; color:#555;
+}
+.board-total-area strong{
+	font-weight:bold; color:#f91c40;
+}
+.board-total-area span{
+	margin:0 0 0 10px;
+}
+
+	/* 페이징 */
+.board-paging{
+	clear:both;
+	margin:40px 0 0 0;
+	text-align:center;
+	font-size:0; line-height:0; /* display:inline-block; 여백제거 */
+}
+.board-paging ol{
+	display:inline-block; 
+}
+.board-paging ol li{
+	display:inline-block; 
+	margin:0 2px;
+}
+.board-paging ol a{
+	display:block;
+	width:28px; height:28px;
+	border:1px solid #ddd;
+	font-size:13px; line-height:28px; color:#555;
+}
+
+	/* 페이지 on */
+.board-paging ol li.on a{
+	background:#54545d;
+	border:1px solid #54545d;
+	color:#fff;
+}
+
+	/* 페이지 hover */
+.board-paging li a:hover{
+	border:1px solid #888894;
+	background:#9898a5;
+	color:#fff;
+}
+
+.board-paging > a { 
+	display:inline-block;  
+	margin-left:-1px;
+    width:28px; height:28px;
+	border:1px solid #dedede;
+    vertical-align:top;
+}
+.board-paging > a:hover {
+    color:#fff;
+    border-color:#9898a5;
+    background-color:#9898a5;
+}
+.board-paging .paging-btn-first, .board-paging .paging-btn-prev, .board-paging .paging-btn-next, .board-paging .paging-btn-last { 
+	font-size:0; line-height:0;
+}
+
+.paging-btn-first {background:url('/img/common/paging-first-off.png') no-repeat center center;}
+.paging-btn-prev {background:url('/img/common/paging-prev-off.png') no-repeat center center;}
+.paging-btn-next {background:url('/img/common/paging-next-off.png') no-repeat center center;}
+.paging-btn-last {background:url('/img/common/paging-last-off.png') no-repeat center center;}
+.paging-btn-first:hover {background: url('/img/common/paging-first-on.png') no-repeat center center;}
+.paging-btn-prev:hover {background: url('/img/common/paging-prev-on.png') no-repeat center center;}
+.paging-btn-next:hover {background: url('/img/common/paging-next-on.png') no-repeat center center;}
+.paging-btn-last:hover {background: url('/img/common/paging-last-on.png') no-repeat center center;}
+
+	/* 검색 */
+.board-search-area{
+    margin:40px 0 0 0;
+	text-align:center;
+	font-size:0; line-height:0;
+}
+.board-search-area select{
+	margin:0 5px 0 0 ;
+	width:90px; height:28px;
+	border:1px solid #d8d8d8;
+	font-size:13px; color:#555;
+}
+.board-search-area input[type="text"]{
+	margin:0 5px 0 0 ; padding:0 0 0 5px;
+	width:219px; height:26px;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+.board-search-area input[type="submit"]{
+	width:55px; height:28px;
+	border:0 none;
+	background:#6c6c77;
+	font-size:13px; line-height:28px; color:#fff;
+}
+/* -------- 게시판 공통 End  -------- */
+
+/* -------- 일반 게시판  -------- */
+ 	/* 게시판 */
+.basic-board-list{
+	width:100%;
+	border-bottom:1px solid #e9e9e9;
+	text-align:center;
+}
+.basic-board-list thead th{
+	padding:13px 0;
+	border-top:2px solid #555;
+	border-bottom:1px solid #bbb;
+	background:#fafafb;
+	font-weight:bold; font-size:14px; color:#444;
+	vertical-align:middle;
+}
+.basic-board-list tbody tr{
+	border-top: 1px solid #e9e9e9;
+}
+
+	/* 게시판 답글 있을 때 */
+.basic-board-list tbody .board-list-reply{
+	border-top:1px dashed #e9e9e9;
+}
+.basic-board-list tbody tr:first-child{
+	border-top:0 none;
+}
+.basic-board-list tbody td{
+	padding:8px 0;
+	font-size:13px; line-height:1; color:#555;
+	vertical-align:middle;
+}
+.basic-board-list  .board-list-subject{ /* 게시글 제목 */
+	padding:0 0 0 5px;
+	text-align:left;
+}
+.basic-board-list  .board-list-subject a{ /* 게시글 제목 */
+	color:#555;
+}
+.basic-board-list .board-list-lock-icon{ /* 비밀글 icon */
+	margin:0 5px 0 0;
+}
+.basic-board-list .board-list-re-icon{ /* 답글 icon */
+	margin: 0 5px 0 15px;
+}
+.basic-board-list  .board-list-file-icon{ /* 첨부파일 icon */
+	margin:0 0 0 5px;
+}
+
+	/* 게시판 공지사항 */
+.board-list-notice .board-list-subject{
+	padding:0 0 0 5px;
+	font-weight:bold;
+}
+.board-list-notice .board-list-subject a{
+	color:#7679b9;
+}
+
+	/* 댓글 갯수 표시 */
+.basic-board-list .board-list-subject span{
+	margin-left:5px;
+}
+
+	/* 하단 버튼 */
+.board-btn-area{
+	overflow:hidden;
+	margin:30px 0 0 0;
+}
+
+	/* 선택 버튼 */
+.board-btn-select{
+	float:left;
+}
+.board-btn-select li{
+	float:left;
+	margin-right:5px;
+}
+.board-btn-select a{
+	display:block;
+	padding:10px;
+	background:#9898a5;
+	font-size:13px; color:#fff;
+}
+
+	/* 글쓰기 버튼 */
+.board-btn-write{
+	float:right;
+}
+.board-btn-write a{
+	display:block;
+	padding:10px 30px;
+	background:#7679b9;
+	font-size:13px; color:#fff;
+}
+
+	/* 리스트 비밀번호 입력폼 */
+.board-password-form{
+	margin:150px 0;
+	text-align:center;
+}
+.board-password-form form{
+	margin:0 auto; padding:50px;
+	width:50%;
+	border:1px solid #ddd;
+}
+.board-password-txt{
+	font-size:13px; line-height:2; color:#555;
+}
+.board-password-txt strong{
+	font-weight:bold; color:#333;
+}
+.board-password-input{
+	margin:30px 0;
+}
+.board-password-input label{
+	margin:0 10px 0 0;
+	font-size:12px; color:#333;
+}
+.board-password-input input{
+	padding:0 0 0 8px;
+	width:200px; height:26px;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+
+	/* 버튼 */
+.board-password-btn a{
+	display:inline-block;
+	margin:0 5px; padding:10px 30px;
+}
+.board-password-btn .board-password-btn-list{
+	border:1px solid #babaca;
+	color:#444;
+}
+.board-password-btn .board-password-btn-ok{
+	border:1px solid #6c6c77;
+	background:#6c6c77;
+	color:#fff;
+}
+/* -------- 일반 게시판 End  -------- */
+
+/* -------- 갤러리 게시판  -------- */
+.gallery-board-list{
+	overflow:hidden;
+	width:100%; 
+	font-size:0; line-height:0;
+}
+.gallery-board-list>ul>li{
+	position:relative;
+	display:inline-block;
+	margin-bottom:48px; margin-right:2%;
+	width:32%; /* 3개씩 출력*/
+	vertical-align:top;
+}
+.gallery-board-list li:nth-child(3n+3){
+	margin-right:0;
+}
+.gallery-board-list li img{
+	width:100%;
+}
+
+.gallery-board-list .date_img{ 
+	font-weight:300; font-size:12px; line-height:26px; color:#666;
+}
+@media screen and (max-width:640px){ 
+	.gallery-board-list .date_img{ 
+		font-size:14px;
+	}
+}
+.gallery-board-list .date_img strong{ 
+	margin:0 0 0 10px; display:inline-block; width:55px; height:26px;
+	box-sizing:border-box;
+	font-weight:300; font-size:12px; line-height:26px;color:#fff;  text-align:center;
+}
+.gallery-board-list .date_img strong.date_on{ 
+	 background:#091520; 
+}
+.gallery-board-list .date_img strong.date_off{ 
+	 background:#c4c7c9; 
+}
+.event-view-date strong.date_on{ 
+    margin:0 0 0 10px; display:inline-block; width:55px; height:26px;
+    box-sizing:border-box;
+    font-weight:300; font-size:12px; line-height:26px;color:#fff;  text-align:center;
+    background:#091520; 
+}
+.event-view-date strong.date_off{ 
+    margin:0 0 0 10px; display:inline-block; width:55px; height:26px;
+    box-sizing:border-box;
+    font-weight:300; font-size:12px; line-height:26px;color:#fff;  text-align:center;
+    background:#c4c7c9; 
+}
+
+	/* checkbox */
+.gallery-board-list input[type="checkbox"]{
+	position:absolute; top:10px; left:10px;
+	width:15px; height:15px;
+}
+
+	/* txt  area */
+.gallery-board-list .gallery-list-cont{
+	box-sizing:border-box;
+	padding:15px;
+	width:100%;
+	border:1px solid #ccc;
+}
+.gallery-board-list .gallery-list-date{ /* 날짜 하단 여백 */
+	margin-bottom:9px;
+}
+.gallery-board-list .gallery-list-subject{ /* 제목 하단 여백 */
+	margin-bottom:9px;
+}
+.gallery-board-list .gallery-list-subject a{ /* 제목 */
+	font-weight:bold; font-size:16px; 
+	line-height:1; color:#333;
+}
+.gallery-list-subject span{ /* 댓글 갯수 */
+	margin-left:5px;
+	font-size:13px; line-height:1; color:#333;
+}
+.gallery-board-list .gallery-list-cont-view{ /* 내용 하단 여백 */
+	margin-bottom:8px;
+}
+.gallery-board-list .gallery-list-cont-view a{ /* 내용 */
+	font-size:12px; line-height:19px;
+}
+.gallery-board-list .gallery-list-user{ /* 이름 날짜*/
+	font-size:13px; line-height:1;
+	color:#999;
+}
+.gallery-board-list .gallery-list-user span{
+	padding:0 10px;
+	background:url('/img/gallery-list-user-line.gif') no-repeat 0 50%;
+}
+.gallery-board-list .gallery-list-user .gallery-list-name{ /* 이름 - 여백 bg 없앰*/
+	padding-left:0;
+	background:none;
+}
+	/* 2줄 말줄임 */
+.ellipsis{
+	display:block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word; 
+	line-height:12px; 
+	height:60px; /* ie 버전은 높이를 넣어줘야함 line-height*2*/    
+}
+
+	/* 하단 버튼 margin 삭제*/
+.gallery-board-list-area .board-btn-area{
+	margin:0;
+}
+/* -------- 갤러리 게시판  End -------- */
+
+/* -------- 자주하는질문  -------- */
+.qna-board-list{
+	width:100%;
+}
+.qna-board-list dl{
+	border-top:2px solid #555;
+	border-bottom:1px solid #bbb;
+}
+
+	/* 질문 */
+.qna-board-list dt{
+	padding:0 15px 0 10px;
+	height:54px;
+	line-height:54px;
+	border-top:1px solid #ccc;
+	background:url('/img/faq_arrow_off.png') no-repeat 98% 50%; /* 화살표 */
+	font-weight:bold; font-size:15px; color:#6667a1;
+	cursor:pointer;
+}
+
+	/* 답변 보일때 화살표 변경*/
+.qna-board-list dt.on{
+	background:url('/img/faq_arrow_on.png') no-repeat 98% 50%;
+}
+
+/* 
+	1page 3개 출력시 처음부분 border 없애기  
+	- 갯수 수정시 (3n+1) 부분 변경해주어야함.
+.qna-board-list dt:nth-of-type(3n+1){
+	border-top:0 none;
+}
+*/
+
+	/* Q */
+.qna-board-list dt span{
+	display:inline-block;
+	margin:0 9px 0 0;
+	width:30px; height:30px;
+	background:#c3c4d5;
+	border-radius:50%;
+	font-size:16px; line-height:30px;
+	color:#fff; text-align:center;
+}
+
+	/* 카테고리 */
+.qna-board-list dt strong{
+	margin:0 10px 0 0;
+	font-weight:normal;
+	color:#999;
+}
+
+	/* 답변 */
+.qna-board-list dd{
+	display:none;
+	padding:15px 30px 20px 50px;
+	background:#fafafd;
+	border-top:1px solid #ccc;
+	font-size:13px; line-height:23px; color:#555;
+}
+
+	/* A */
+.qna-board-list dd span{
+	display:inline-block;
+	margin:0 9px 0 -40px;
+	width:30px; height:30px;
+	background:#9fa0cd;
+	border-radius:50%;
+	font-size:16px; line-height:30px; 
+	color:#fff; text-align:center;
+}
+/* -------- 자주하는질문  End -------- */
+
+/* -------- 글쓰기  -------- */
+.board-write-area{
+	width:100%;
+}
+.board-write{
+	width:100%;
+	border-top:2px solid #555;
+}
+.board-write th{
+	padding:7px 13px;
+	width:12.6%;
+	box-sizing:border-box;
+	border-bottom:1px solid #dedede;
+	background:#f3f3f7;
+	text-align:left;
+	vertical-align:middle;
+}
+.board-write th label{
+	font-weight:bold; font-size:13px;
+	line-height:2; color:#555;
+}
+.board-write td{
+	padding: 7px 10px;
+	border-bottom:1px solid #dedede;
+	vertical-align:middle;
+}
+.board-write td input[type="text"],.board-write td input[type="password"]{
+	padding:0; margin:0;
+	padding-left:8px;
+	width:45%; height:26px;
+	border:1px solid #d8d8d8;
+}
+.board-write td select{
+	padding:0; margin:0;
+	padding-left:3px;
+	width:15%; height:28px;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+.board-write td textarea{ /* html 편집기 넣으면 삭제 */
+	padding:10px;
+	width:100%; height:250px;
+	box-sizing:border-box;
+	border:1px solid #d8d8d8;
+	color:#555;
+}
+.board-write td #bw_sclect{
+	width:30%;
+}
+.board-write td label{
+	color:#555;
+}
+.board-write .add_file {
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 0 15px;
+    border: 1px solid #dedede;
+    background: #f3f3f3;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 28px;
+}
+
+	/* 파일 */
+.board-write td button,.board-write td input[type="file"]{
+	margin-bottom:5px;
+	color:#555;
+}
+
+	/* 글쓰기 버튼 */
+.board-write-btn-area{
+	margin:20px 0 0 0;
+	font-size:0; line-height:0;
+	text-align:center;
+}
+.board-write-btn-area a{
+	display:inline-block;
+	margin:0 3px;
+	width:110px; 
+	font-size:13px; line-height:35px;
+}
+.board-write-btn-area .board-write-btn-cancel{
+	background:#fff;
+	box-sizing:border-box;
+	border:1px solid #babaca;
+	line-height:33px; color:#444;
+
+}
+.board-write-btn-area .board-write-btn-ok{
+	background:#6467af;
+	color:#fff;
+}
+/* -------- 글쓰기  End -------- */
+
+/* -------- 글보기  -------- */
+.board-view-area{
+	width:100%;
+	color:#555;
+}
+.board-view{
+	width:100%;
+	border-top:2px solid #555;
+	border-bottom:1px solid #ddd;
+}
+.board-view tr{
+	border-bottom:1px solid #ddd;
+}
+.board-view td{
+	overflow:hidden;
+	padding:12px 0;
+	line-height:1.5;
+}
+
+	/* 글제목 */
+.board-view .board-view-subject{
+	border-bottom:1px solid #555;
+	text-align:center;
+}
+.board-view-subject td{
+	font-weight:bold; font-size:16px;
+}
+
+	/* 글쓴이 등록일 조회*/
+.board-view-writer{
+	font-size:13px;
+}
+
+	/* 글쓴이 */
+.board-view-writer .board-view-name strong{
+	font-weight:bold;
+}
+.board-view-writer .board-view-writer-right{
+	float:right;
+}
+.board-view-writer .board-view-writer-right span{
+	margin-left:30px;
+}
+
+	/* link */
+.board-view-link td{
+	padding-left:20px;
+	background:url('/img/icon_link.gif') no-repeat 0 50%;
+}
+.board-view-link a:hover{
+	text-decoration:underline;
+}
+
+	/* 파일 */
+.board-view-file td{
+	float:left; padding:5px 0 5px 20px;
+	width:100%;
+    border-bottom:1px dashed #efefef;
+    box-sizing:border-box;
+	background:url('/img/icon_file.gif') no-repeat 0 50%;
+}
+.board-view-file td:last-child{
+    border-bottom:0 none;
+}
+.board-view-file span{
+	font-weight:bold;
+}
+
+	/* 글내용 */
+.board-view-cont td div{
+	margin-bottom:20px;
+	max-width:100%;
+	text-align:center;
+}
+.board-view-cont td{
+	padding:30px 0;
+	font-size:13px; line-height:22px;
+}
+
+	/* 댓글 no */
+.board-view-comment-nodata{
+	border-top:1px solid #ddd;
+}
+.board-view-comment-nodata td{
+	padding:18px 20px;
+	text-align:center;
+}
+
+	/* 댓글 보기 */
+.board-view-comment{
+	border-top:1px solid #ddd;
+}
+.board-view-comment td{
+	padding:10px 20px;
+	width:100%;
+	box-sizing:border-box;
+}
+.board-view-comment span{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+	/* 이름*/
+.board-view-comment-name{
+	width:10%;
+}
+
+	/* 댓글 내용*/
+.board-view-comment-txt{
+	width:70%;
+}
+
+	/* 댓글 등록일 */
+.board-view-comment-date{
+	width:18%;
+	text-align:right;
+}
+
+	/* 댓글삭제 */
+.board-view-comment-del{
+	display:inline-block;
+	width:2%;
+	text-align:right;
+}
+
+	/* 댓글쓴이 / 비밀번호 */
+.board-view-comment-write{
+	border-top:1px solid #ddd;
+	font-size:0; line-height:0;
+}
+.board-view-comment-write td{
+	box-sizing:border-box;
+	padding:10px 20px;
+	width:100%;
+}
+.board-view-comment-write-name,  .board-view-comment-write-pw{
+	float:left;
+	margin-bottom:10px;
+}
+.board-view-comment-write label{
+	margin:0 10px 0 0;
+	font-size:13px; line-height:1.5;
+	vertical-align:middle;
+}
+.board-view-comment-write input{
+	margin:0 30px 0 0; padding:0 0 0 8px;
+	width:200px; height:26px;
+	border:1px solid #d8d8d8;
+	line-height:1.5px; color:#555;
+}
+
+	/* 댓글쓰기 */
+.board-view-comment-cont{
+	box-sizing:border-box;
+	width:100%;
+}
+.board-view-comment-cont textarea{
+	display:inline-block;
+	padding:0; margin:0; 
+	margin-right:1%; padding:10px;
+	width:80%; height:98px;
+	box-sizing:border-box;
+	border:1px solid #d8d8d8;
+	color:#555;
+	vertical-align:top;
+}
+.board-view-comment-cont a{
+	display:inline-block;
+	width:120px; height:98px;
+	background:#6c6c77;
+	font-size:14px; line-height:98px;
+	color:#fff; text-align:center;
+	vertical-align:top;
+}
+
+	/* 하단버튼 */
+.board-view-btn-area{
+	overflow:hidden;
+	margin:20px 0 40px 0;
+	width:100%;
+}
+.board-view-btn-left{
+	float:left;
+}
+.board-view-btn-right{
+	float:right;
+}
+.board-view-btn-area a{
+	display:inline-block;
+	margin:0 0 0 5px; padding:8px 30px;
+	border:1px solid #babaca;
+	background:#fff;
+	font-size:13px; line-height:1.2;
+}
+
+	/* 글쓰기 버튼 */
+.board-view-btn-area .board-view-btn-write{
+	border:1px solid #7679b9;
+	background:#7679b9;
+	color:#fff;
+}
+
+	/* 이전글 다음글 */
+.next-view{
+	border-top:1px solid #d8d8d8;
+}
+.next-view li{
+	padding:12px 20px;
+	border-bottom:1px solid #d8d8d8;
+	font-size:12px; line-height:1.5;
+}
+.next-view li strong{
+	margin-right:70px;
+	padding-left:20px;
+	color:#333;
+}
+.next-view .next-view-list-prev strong{
+	background:url('/img/faq_arrow_on.png') no-repeat 0 50%;
+	background-size:8px auto;
+}
+.next-view .next-view-list-next strong{
+	background:url('/img/faq_arrow_off.png') no-repeat 0 50%;
+	background-size:8px auto;
+}
+.next-view li a{
+	color:#555;
+}
+.next-view li a:hover{
+	text-decoration:underline;
+}
+/* -------- 글보기  End -------- */
+
+/* -------- 웹진 리스트 -------- */
+.webzine-board-list>ul{ 
+	overflow:hidden;
+}
+.webzine-board-list>ul>li{ 
+	position:relative;
+	overflow:hidden;
+	margin-bottom:20px;
+	padding:15px;
+	width:100%;
+	box-sizing:border-box;
+	border:1px solid #d8d8d8;
+	border-top:1px solid #7679b9;
+}
+
+/* input type=checkbox */
+.webzine-board-list>ul>li input { 
+	position:absolute; top:20px; left:20px;
+	width:15px; height:15px;
+}
+
+/* 이미지 영역 */
+.webzine-board-list>ul>li>a{ 
+	float:left;
+}
+.webzine-board-list>ul>li>a img{ 
+	width:200px; height:auto;
+}
+
+/* 텍스트 영역 */
+.webzine-board-list .gallery-list-cont{ 
+	float:left;
+	margin-left:30px;
+	width:70%;
+	font-size:14px; line-height:160%; color:#666;
+}
+
+/* 제목 */
+.webzine-board-list .gallery-list-subject{ 
+	margin-bottom:10px;
+	font-weight:bold; font-size:20px; line-height:1.4;
+}
+.webzine-board-list .gallery-list-subject span{ 
+	font-weight:normal; font-size:15px; color:#999;
+}
+
+/* 작성자, 작성일 */
+.webzine-board-list .gallery-list-name span,
+.webzine-board-list .gallery-list-date span{ 
+	color:#999;
+}
+.webzine-board-list .gallery-list-cont-view{ 
+	margin-top:5px;
+}
+/* -------- 웹진 리스트  End -------- */

@@ -1,0 +1,50 @@
+    <!-- 매물 리스트 { -->
+    <div class="car_info_list tbl_wrap">
+        <table>
+        <thead>
+        <tr>
+            <td colspan=10 class="select">
+                <form name="form" method="post" action="?tpf=product/list">
+                <div class="item">
+                    <span>
+                    <select id="category1" OnChange="if(this.value) getCategory(2,this.value);">
+                    </select>
+                    </span>
+
+                    <span>
+                    <select id="category2" OnChange="if(this.value) getCategory(3,this.value);">
+                    </select>
+                    </span>
+
+                    <span>
+                    <select id="category3">
+                    </select>
+                    </span>
+
+<!--
+                    <span>
+                    <select id="category4">
+                    </select>
+                    </span>
+
+                    <span>
+                    <select id="category5">
+                    </select>
+                    </span>
+-->
+                </div>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=10>
+                <div class="item_r">
+                    <a href="#" class="sort_list">등록일순</a>
+                    <a href="#" class="sort_list">연식순</a>
+                    <a href="#" class="sort_list">사진매물</a>
+                </div>
+            </td>
+        </tr>
+        </thead>
+        </table>
+    </div>

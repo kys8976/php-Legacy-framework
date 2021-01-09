@@ -1,0 +1,46 @@
+<div class="sub-contents">
+	<!-- 게시판 탭 -->
+	<div class="sub-tab">
+		<div class="tab-area">
+			<ul>
+				<li class="active">전체</li>
+				<li>책보</li>
+				<li>잉글리시 크레용</li>
+				<li>오 마이 프렌즈</li>
+				<li>누리온</li>
+				<li>마음씨</li>
+				<li>아티언스 키즈</li>
+				<li>놀다</li>
+				<li>꿈단지</li>
+				<li>프로젝트</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 게시판 소스 삽입 -->
+	<div class="sub-contents-box">
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+$(window).ready(function() {
+    var wi = $(window).width();  
+    $("p.testp").text('Initial screen width is currently: ' + wi + 'px.');
+
+	var wi = $(window).width();
+
+	if (wi <= 1024){
+		$('.sub-tab ul').each(function(){  
+			var liItems = $(this);
+			var Sum = 0;
+			if(liItems.children('li').length >= 1){
+			 $(this).children('li').each(function(i, e){
+					Sum += $(e).outerWidth(true);
+			 });
+			$(this).width(Sum+1);
+			} 
+		});
+	}           
+});
+</script>

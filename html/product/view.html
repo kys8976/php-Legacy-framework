@@ -1,0 +1,58 @@
+<p class="path">home &lt; 제품소개 &lt; <span class="path_point"><?=$category_name?></span></p>
+<h3 class="ctn_tle"><?=$category_name?></h3>
+<div class="ctn">
+
+	<div class="product_view">
+		<div class="left"><img src="<?=$arrProduct['image']?>" alt="제품사진" /></div>
+		<div class="right">
+			<h4><?=$arrProduct['title']?></h4>
+			<p>TYPE : <?=$arrProduct['type']?><br>
+			<?=$arrProduct['title_sub']?></p>
+			<p>
+<?php
+if (!empty($arrProduct['mark'])) {
+    foreach($arrProduct['mark'] as $key => $val) {
+        echo '  <img src="/img/sub/mark0'.$val.'.png" alt="K마크" />';
+    }
+}
+?>
+			</p>
+			<p>인증서번호 : <?=$arrProduct['certificate_number']?></p>
+<?php
+if (!empty($arrProduct['file_name'])) {
+    echo '  <p>제품사양서 : <span class="board-write-btn-area"><a href="?tpf=common/save_as&file_path=product&file_name='.$arrProduct['file_name'].'&orig_name='.$arrProduct['file_name'].'" target="_blank" class="board-write-btn-ok" style="line-height:25px;">다운로드</a></span></p>';
+}
+?>
+		</div>
+	</div>
+
+	<h4 class="deps">Specifications</h4>
+	<?=$arrProduct['content']?>
+
+<?php
+if (!empty($arrProduct['arrImage'])) {
+    echo '
+    <h4 class="deps">Product Images</h4>
+    <div align="center">';
+    foreach($arrProduct['arrImage'] as $key => $val) {
+        echo '<img src="'.$val.'" style="max-width:90%;"><br><br>';
+    }
+    echo '
+    </div>
+	<p class="pd_txt"></p>';
+}
+?>
+
+<?php
+if (!empty($arrProduct['arrSize'])) {
+    echo '
+    <h4 class="deps">Product Size</h4>
+	<div align="center">';
+    foreach($arrProduct['arrSize'] as $key => $val) {
+        echo '<img src="'.$val.'" style="max-width:90%;"><br><br>';
+    }
+    echo '
+    </div>';
+}
+?>
+</div>

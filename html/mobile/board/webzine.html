@@ -1,0 +1,121 @@
+<!-- board-wrap -->
+<section class="board-wrap">
+
+    <!-- board-title -->
+    <h2 class="board-title"><?=$board_info['title']?></h2>
+    <!-- //board-title -->
+
+<?php
+if (!empty($arrCategory)) {
+?>
+<!-- 게시판 네비 -->
+<section class="category-tab">
+    <ul>
+        <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+    </ul>
+</section>
+<!-- //게시판 네비 -->
+<?php
+}
+?>
+
+    <!-- basic-board-list -->
+    <table class="webzine-board-list">
+        <colgroup>
+            <col width="8%" />
+            <col width="*" />
+            <col width="15%" />
+            <col width="12%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">내용</th>
+                <th scope="col">작성자</th>
+                <th scope="col">게재일자</th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+if (!empty($data['list'])) {
+    $start_number = $data['start_number'];
+    foreach($data['list'] as $key => $val) {
+        echo '
+        <tr>
+            <td class="board-num">'.$start_number.'</td>
+            <td class="board-subject">
+                <a href="?tpf=board/view&board_code='.$this->reqData['board_code'].'&code='.$val['code'].'">
+                <div>';
+
+    if ($val['image_url']) {    // 첨부파일 존재할때
+        echo ' <img src="'.$val['image_url'].'" alt="썸네일" class="thumb">';
+    }
+    else {
+        echo ' <img src="/img/noimage.gif" alt="썸네일" class="thumb">';
+    }
+
+        echo '  </div>
+                <div>
+                    <strong>'.$val['title'].'.</strong>
+                    <span>'.$val['content'].'</span>
+                </div>
+                </a>
+            </td>
+            <td class="board-name">'.$val['name'].'</td>
+            <td class="board-date">'.$val['reg_date_short'].'</td>
+        </tr>';
+        $start_number--;
+    }
+}
+else {
+    echo '
+        <tr class="no-data">
+            <td>등록된 게시물이 없습니다.</td>
+        </tr>';
+}
+?>
+        </tbody>
+    </table>
+    <!-- //basic-board-list -->
+
+    <!-- btn -->
+    <p class="btn-write-wrap"><a href="#" class="btn-write">등록</a></p>
+    <!-- //btn -->
+
+    <!-- paging -->
+    <? echo $data['page'];?>
+    <!-- paging -->
+
+    <!-- board-search-wrap -->
+    <section class="board-search-wrap">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <fieldset>
+                <legend>검색</legend>
+                <p class="search-select-wrap">
+                <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                </select>
+                </p>
+                <p class="search-input-wrap"><input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" /></p>
+                <p class="search-btn-wrap"><a href="#" onclick="form_search.submit();">검색</a></p>
+            </fieldset>
+        </form>
+    </section>
+    <!-- //board-search-wrap -->
+
+</section>
+<!-- //board-wrap -->
+
+	<script type="text/javascript">
+		$(".webzine-board-list .no-data td").attr("colspan", $(".webzine-board-list thead th").length);
+	</script>

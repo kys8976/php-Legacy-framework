@@ -1,0 +1,35 @@
+<link href="//whoisict.com/html/js/libs/admin-lte/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+.fc-sat { color:blue;}
+.fc-sun { color:red;}
+.fc-event{ cursor: pointer;}
+</style>
+
+<div id="calendar"></div>
+
+<div class="layer">
+	<div class="bg"></div>
+	<div id="viewSchedule" class="pop-layer">
+		<div class="pop-container">
+			<div class="pop-conts">
+                <div style="text-align:right; padding:5px;"><button type="button" onclick="$('.layer').fadeOut();" class="btn btn-primary">닫기</button></div>
+
+				<table class="table table-bordered" style="width:100%">
+                <tr>
+                    <td class="menu">날짜</td>
+                    <td align="left" style="padding:10px;"><span id="start_date"></span> ~ <span id="end_date"></span></td>
+                </tr>
+                <tr>
+                    <td class="menu">제목</td>
+                    <td align="left" style="padding:10px;"><span id="title"></span></td>
+                </tr>
+                <tr>
+                    <td class="menu">내용</td>
+                    <td align="left" style="padding:10px;"><pre><span id="content"></span></pre></td>
+                </tr>
+                </table>
+			</div>
+		</div>
+	</div>
+</div>

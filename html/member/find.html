@@ -1,0 +1,61 @@
+<!-- 회원가입 페이지 Area -->
+<div class="page-area">
+
+    <!-- 페이지 타이틀 -->
+    <div class="page-title-area">
+        <h2>아이디/비밀번호 찾기</h2>
+    </div>
+    <!-- //페이지 타이틀 -->
+
+    <!-- 약관동의 form -->
+    <div class="find-area">
+        <!-- 아이디 찾기 -->
+        <h3>아이디 찾기<span>회원정보에 입력하신 성함과 이메일을 입력해 주세요.</span></h3>
+        <table class="join-member-info-form">
+        <form name="form1" action="?tpf=member/process" method="post">
+        <input type="hidden" name="mode" value="find_id">
+        <tr>
+            <th scope="row">이름</th>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <th scope="row">이메일</th>
+            <td><input type="text" name="email" /></td>
+        </tr>
+        </form>
+        </table>
+
+        <!-- 버튼 -->
+        <p class="join-btn-area"><a href="/" class="join-btn-cancel">취소</a><a href="#none" onclick="findId()" class="join-btn-ok">아이디 찾기</a></p>
+        <!-- //버튼 -->
+        <!-- //아이디 찾기 -->
+
+        <!-- 비밀번호 찾기 -->
+        <h3>비밀번호 찾기<span>회원정보에 입력하신 이메일로 <u>새롭게 변경된 비밀번호</u>를 보내드립니다.</span></h3>
+        <table class="join-member-info-form">
+        <form name="form2" action="?tpf=member/process" method="post">
+        <input type="hidden" name="mode" value="find_password">
+        <tr>
+            <th scope="row">아이디</th>
+            <td><input type="text" name="id" /></td>
+        </tr>
+        <tr>
+            <th scope="row">이름</th>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <th scope="row">이메일</th>
+            <td><input type="text" name="email" /></td>
+        </tr>
+        </form>
+        </table>
+
+        <!-- 버튼 -->
+        <p class="join-btn-area"><a href="/" class="join-btn-cancel">취소</a><a href="#none" onclick="findPassword();" class="join-btn-ok">새 비밀번호 받기</a></p>
+        <!-- //버튼 -->
+        <!-- //비밀번호 찾기 -->
+    </div>
+    <!-- //약관동의 form -->
+
+</div>
+<!-- //회원가입 페이지 Area-->

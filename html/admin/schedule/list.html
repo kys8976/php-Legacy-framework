@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<style>
+.fc-sat { color:blue; }
+.fc-sun { color:red;  }
+</style>
+
+<section class="content-header">
+    <h1>
+    일정 관리
+    <small>schedule list</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">일정 관리</li>
+    </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-body no-padding">
+          <!-- THE CALENDAR -->
+          <div id="calendar"></div>
+        </div><!-- /.box-body -->
+      </div><!-- /. box -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</section>
+
+<div class="modal fade" id="modalContent" tabindex="-2" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog" style="width:600px;">
+        <div class="modal-content">
+            <form name="form_register" method="post" action="?tpf=admin/schedule/process" enctype="multipart/form-data">
+            <input type="hidden" name="mode" id="mode" value="insert">
+            <input type="hidden" name="type" value="nomal">
+            <input type="hidden" name="code">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPortfolio">일정 관리</h4>
+            </div>
+            <div class="modal-body">
+
+            <h4><p class="text-light-blue"><i class="fa fa-fw fa-info-circle"></i> 일정 <span id="board_sub_title">등록</span></p></h4>
+            <table class="table table-bordered">
+            <tr>
+                <td class="menu">날짜</td>
+                <td align="left">
+                <span style="float:left">
+                <input type="text" name="start_date" id="datepicker1" class="form-control input-sm" style="width:80px; float:left" readonly placeholder="시작일">
+                <select name="start_time" class="form-control input-sm" style="width:80px; margin-left:3px; float:left;">
+<?php
+foreach($arrTimeType as $key => $val) {
+    echo '      <option value="'.$val.'">'.$val.'</option>';
+}
+?>
+				</select>
+                </span>
+                <span style="float:left">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+                <span style="float:left">
+                <input type="text" name="end_date" id="datepicker2" class="form-control input-sm" style="width:80px; float:left" readonly placeholder="종료일">&nbsp;&nbsp;
+                <select name="end_time" class="form-control input-sm" style="width:100px; margin-left:3px; float:left;">
+<?php
+foreach($arrTimeType as $key => $val) {
+    echo '      <option value="'.$val.'">'.$val.'</option>';
+}
+?>
+				</select>
+                </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="menu">제목</td>
+                <td align="left">
+                <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td style="width:8%; text-align:left;">
+                    <select name="background_color" id="colorselector">
+<?php
+foreach($arrSchedultTileColor as $key => $val) {
+    echo '          <option value="'.$val.'" data-color="'.$val.'"></option>';
+}
+?>
+                    </select>
+                    </td>
+                    <td>
+                    <input type="text" name="title" class="form-control input-sm" style="width:100%;">
+                    </td>
+                </tr>
+                </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="menu">내용</td>
+                <td align="left"><textarea name="content" id="content" rows="5" style="width:100%"></textarea></td>
+            </tr>
+            </table>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" onclick="register()" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" onclick="deleteSchedule()" id="display_reply" style="display:none;" class="btn btn-danger">삭제</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

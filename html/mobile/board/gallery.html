@@ -1,0 +1,92 @@
+<!-- board-wrap -->
+<section class="board-wrap">
+
+    <!-- board-title -->
+    <h2 class="board-title"><?=$board_info['title']?></h2>
+    <!-- //board-title -->
+
+<?php
+if (!empty($arrCategory)) {
+?>
+<!-- 게시판 네비 -->
+<section class="category-tab">
+    <ul>
+        <li<?php if(empty($this->reqData['category'])) { echo ' class="on"';}?>><a href="<?=$current_url?>">전체</a></li>
+<?php
+foreach($arrCategory as $key => $val) {
+echo '  <li'; if(@$this->reqData['category'] == $val) { echo ' class="on"';} echo '><a href="'.$current_url.'&category='.$val.'">'.$val.'</a></li>';
+}
+?>
+    </ul>
+</section>
+<!-- //게시판 네비 -->
+<?php
+}
+?>
+
+    <!-- gallery-list -->
+<?php
+if (!empty($data['list'])) {
+    echo '<section class="gallery-list">';
+    $start_number = $data['start_number'];
+    foreach($data['list'] as $key => $val) {
+        echo '
+            <figure>
+                <a href="?tpf=board/view&board_code='.$board_code.'&code='.$val['code'].'">
+                <p class="thumb-wrap"><img src="'; if ($val['image_url']) { echo $val['image_url'];} else { echo '/img/noimage.gif';} echo '" /></p>
+                <figcaption>
+                    <p class="gallery-title">'.$val['title'].'</p>
+                    <ul>
+                        <li><span>'.$val['name'].' / '.$val['reg_date'].'</span></li>
+                        <li><span>'.strip_tags($val['content']).'</span></li>
+                    </ul>
+                </figcaption>
+                </a>
+            </figure>
+        ';
+        $start_number--;
+    }
+    echo '</section>';
+}
+else {
+    echo '<div style="text-align:center; height:30px;">등록된 게시물이 없습니다.</div>';
+}
+?>
+    <!-- //gallery-list -->
+
+    <!-- btn -->
+<?php
+if ($board_info['auth_write'] != 1) {   // 최고관리자 권한이 아닐때
+    echo '<p class="btn-write-wrap"><a href="?tpf=board/write&board_code='.$board_code.'" class="btn-write">글쓰기</a></p>';
+}
+?>
+    <!-- //btn -->
+
+    <!-- paging -->
+    <? echo $data['page'];?>
+    <!-- paging -->
+
+    <!-- board-search-wrap -->
+    <section class="board-search-wrap">
+        <form name="form_search" method="post" action="?tpf=board/list">
+        <input type="hidden" name="board_code" value="<?=$board_code?>">
+            <fieldset>
+                <legend>검색</legend>
+                <p class="search-select-wrap">
+                <select name="field">
+<?php
+foreach($arrSearch as $key => $val) {
+    echo '      <option value="'.$key.'"'; if(!empty($field) && $field == $key) echo ' selected'; echo '>'.$val.'</option>';
+}
+?>
+                </select>
+                </p>
+                <p class="search-input-wrap"><input type="text" name="keyword" value="<?=!empty($keyword) ? $keyword : ""?>" /></p>
+                <p class="search-btn-wrap"><a href="#" onclick="form_search.submit();">검색</a></p>
+            </fieldset>
+        </form>
+    </section>
+    <!-- //board-search-wrap -->
+
+</section>
+<!-- //board-wrap -->
