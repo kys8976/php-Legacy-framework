@@ -4,8 +4,6 @@
 * API class
 * Copyright (c) 2015 MIT
 *
-* @author	Lim, Sangjun  <porchingman@naver.com>
-* @version	$Id: class.API.php,v 1.00 2015/10/17 15:49:47 Sangjun $
 * @param	string $param
 * @return	array
 * @access	public
